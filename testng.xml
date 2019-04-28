@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="CrossBrowserInputFormTest">
+    <test name="ChromeTest">
+        <parameter name="browser" value="chrome"/>
+        <packages>
+          <!---  <package name="ufy.mmcs.brs.InputFormTest.*"/>  -->
+            <package name="ufy.mmcs.brs.StudentPageTest.*"/>
+        </packages>
+    </test>
+    <test name="FirefoxTest">
+        <parameter name="browser" value="firefox"/>
+        <packages>
+            <!---  <package name="ufy.mmcs.brs.InputFormTest.*"/>  -->
+            <package name="ufy.mmcs.brs.StudentPageTest.*"/>
+        </packages>
+    </test>
+</suite>
