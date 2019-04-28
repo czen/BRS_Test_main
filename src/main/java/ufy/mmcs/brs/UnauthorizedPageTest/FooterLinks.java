@@ -171,41 +171,101 @@ public class FooterLinks extends Helper
         Assert.assertFalse(flag,errors);
     }
 
-    //не работает. фиг знает почему
     @Test
-    public void forgotten_pwd_page_click(){
+    public void forgotten_pwd_page_click_wrong_inputs() {
+        driver.navigate().to("http://testgrade.sfedu.ru/remind");
+        String errors = "";
+        Boolean flag = false;
+
+        if (!IsElementVisible(By.id(("email"))))
+            Assert.fail("Нет поле для ввода емейла");
+
+        WebElement field = driver.findElement(By.id(("email")));
+        String input_chars = "123";
+        field.sendKeys(input_chars);
+        driver.findElement(By.id("remind")).click();
+
+        String error_text;
+        if (IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+            error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
+
+            if (!error_text.equals("Введенная строка не является e‑mail адресом!")) {
+                flag = true;
+                errors = "Не соответсвует текст " + error_text + ". ";
+            }
+            //Assert.assertEquals(error_text, "Введенная строка не является e-mail адресом!");
+        } else {
+            // Assert.fail("Нет сообщения об ошибке");
+            flag = true;
+            errors += " Нет сообщения об ошибке при вводе ";
+            errors += input_chars + ". ";
+        }
+        Assert.assertFalse(flag,errors);
+    }
+
+    @Test
+    public void forgotten_pwd_page_click_empty() {
+        driver.navigate().to("http://testgrade.sfedu.ru/remind");
+        String errors = "";
+        Boolean flag = false;
+
+        if (!IsElementVisible(By.id(("email"))))
+            Assert.fail("Нет поле для ввода емейла");
+
+        WebElement field = driver.findElement(By.id(("email")));
+        String input_chars = "";
+        field.sendKeys(input_chars);
+        driver.findElement(By.id("remind")).click();
+
+        String error_text;
+        if (IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+            error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
+
+            if (!error_text.equals("Введенная строка не является e‑mail адресом!")) {
+                flag = true;
+                errors = "Не соответсвует текст " + error_text + ". ";
+            }
+            //Assert.assertEquals(error_text, "Введенная строка не является e-mail адресом!");
+        } else {
+            // Assert.fail("Нет сообщения об ошибке");
+            flag = true;
+            errors += " Нет сообщения об ошибке при вводе ";
+            errors += input_chars + ". ";
+        }
+        Assert.assertFalse(flag,errors);
+    }
+
+    @Test
+    public void forgotten_pwd_page_click_wrong_email(){
         driver.navigate().to("http://testgrade.sfedu.ru/remind");
         String errors="";
         Boolean flag=false;
+        String error_text;
+        String input_chars;
 
         if(!IsElementVisible(By.id(("email"))))
             Assert.fail("Нет поле для ввода емейла");
 
         WebElement field=driver.findElement(By.id(("email")));
-        String input_chars="123";
+        input_chars="123@mail.ru";
+        field.sendKeys("");
         field.sendKeys(input_chars);
-
-driver.findElement(By.id("remind")).click();
-
-        String error_text;
+        driver.findElement(By.id("remind")).click();
         if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
-            /*if(hhelp.IsElementVisible(By.id("username")))
-                Assert.fail("Выполнен вход в аккаунт");*/
-            if(error_text!="Введенная строка не является e‑mail адресом!") {
+
+            if(! error_text.equals("Пользователь с таким e-mail адресом не зарегистрирован в системе!")) {
                 flag = true;
-                errors = "Не соответсвует текст " + error_text;
+                errors = "Не соответсвует текст: Пользователь с таким e-mail адресом не зарегистрирован в системе! and " + error_text+". ";
             }
-            //Assert.assertEquals(error_text, "Введенная строка не является e-mail адресом!");
         }
         else{
-           // Assert.fail("Нет сообщения об ошибке");
+            // Assert.fail("Нет сообщения об ошибке");
             flag=true;
-            errors+=" Нет сообщения об ошибке при вводе ";
-            errors+=input_chars;
+            errors+=" Нет сообщения об ошибке при вводе: ";
+            errors+=input_chars+". ";
         }
 
-
-Assert.assertFalse(flag,errors);
+        Assert.assertFalse(flag,errors);
     }
 }
