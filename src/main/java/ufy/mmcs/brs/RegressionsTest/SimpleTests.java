@@ -8,11 +8,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class SimpleTests {
+public class SimpleTests extends  Helpers{
 
-    private WebDriver driver;
+   /* private WebDriver driver;
     private WebDriverWait wait;
-    private Helpers hhelp;
+    private Helpers hhelp;*/
 
     private String url1="http://testgrade.sfedu.ru/";
     private String url2="http://testgrade.sfedu.ru/remind";
@@ -24,15 +24,16 @@ public class SimpleTests {
     @BeforeClass// @BeforeTest
     protected void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
         if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "D:\\MyWork\\Drivers\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
             driver = new ChromeDriver();
         } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", "D:\\MyWork\\Drivers\\geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
         }
 
-        hhelp = new Helpers(driver);
-        wait=new WebDriverWait(driver, 20);
+       /* hhelp = new Helpers(driver);
+        wait=new WebDriverWait(driver, 20);*/
+        timeouts_set();
     }
 
     @AfterClass
@@ -46,28 +47,28 @@ public class SimpleTests {
     @Test
     public void go_to_home(){
         driver.navigate().to(url1);
-        Boolean flag=hhelp.IsElementVisible(By.id("signin_b"));
+        Boolean flag=IsElementVisible(By.id("signin_b"));
         Assert.assertTrue(flag,"Не загрузилась страница");
     }
 
     @Test
     public void go_to_remind(){
         driver.navigate().to(url2);
-        Boolean flag=hhelp.IsElementVisible(By.id("remind"));
+        Boolean flag=IsElementVisible(By.id("remind"));
         Assert.assertTrue(flag,"Не загрузилась страница");
     }
 
     @Test
     public void go_to_sign_in(){
         driver.navigate().to(url3);
-        Boolean flag=hhelp.IsElementVisible(By.id("signin_b"));
+        Boolean flag=IsElementVisible(By.id("signin_b"));
         Assert.assertTrue(flag,"Не загрузилась страница");
     }
 
     @Test
     public void go_to_sign_up(){
         driver.navigate().to(url4);
-        Boolean flag=hhelp.IsElementVisible(By.id("signup_b"));
+        Boolean flag=IsElementVisible(By.id("signup_b"));
         Assert.assertTrue(flag,"Не загрузилась страница");
     }
 }

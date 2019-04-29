@@ -7,7 +7,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import javax.swing.text.StyledEditorKit;
 
 public class FooterLinks extends Helper
 {

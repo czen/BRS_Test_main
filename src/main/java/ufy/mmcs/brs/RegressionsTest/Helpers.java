@@ -12,24 +12,24 @@ import java.util.concurrent.TimeUnit;
 
 public class Helpers {
     private static final long DEFAULT_TIMEOUT = 10;//300;
-    private WebDriverWait wait;
-    private WebDriver driver;
+    protected WebDriverWait wait;
+    protected WebDriver driver;
     private String ChromeDriver="D:\\MyWork\\Drivers\\chromedriver.exe";
     private String FireFoxDriver="D:\\MyWork\\Drivers\\geckodriver.exe";
 
-    static void timeouts_set(WebDriver driver, WebDriverWait wait){
+    void timeouts_set(){
         driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         wait=new WebDriverWait(driver, DEFAULT_TIMEOUT);
     }
     Helpers(){
-        System.setProperty("webdriver.chrome.driver", "D:\\MyWork\\Drivers\\chromedriver.exe");
+      /*  System.setProperty("webdriver.chrome.driver", "D:\\MyWork\\Drivers\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        wait=new WebDriverWait(driver, DEFAULT_TIMEOUT);
+        wait=new WebDriverWait(driver, DEFAULT_TIMEOUT);*/
     }
 
     Helpers(WebDriver driver){

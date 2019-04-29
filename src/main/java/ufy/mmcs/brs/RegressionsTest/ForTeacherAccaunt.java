@@ -8,10 +8,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class ForTeacherAccaunt {
-    private WebDriver driver;
-    private WebDriverWait wait;
-    private Helpers hhelp;
+public class ForTeacherAccaunt extends Helpers{
+    /* private WebDriver driver;
+     private WebDriverWait wait;
+     private Helpers hhelp;*/
     private String url1="http://testgrade.sfedu.ru/";
     private String url2="http://testgrade.sfedu.ru/discipline/13406/rate";
     private String url3="http://testgrade.sfedu.ru/discipline/13406/exam";
@@ -41,17 +41,18 @@ public class ForTeacherAccaunt {
     @BeforeClass// @BeforeTest
     protected void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
         if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "D:\\MyWork\\Drivers\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
             driver = new ChromeDriver();
         } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", "D:\\MyWork\\Drivers\\geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
         }
 
-        hhelp = new Helpers(driver);
-        wait=new WebDriverWait(driver, 20);
-        hhelp.go_home();
-        hhelp.authorization("teacher");
+      /*  hhelp = new Helpers(driver);
+        wait=new WebDriverWait(driver, 20);*/
+        timeouts_set();
+        go_home();
+        authorization("teacher");
     }
 
     @AfterClass // Runs this method after all the test methods in the current class have been run
@@ -65,7 +66,7 @@ public class ForTeacherAccaunt {
     @Test
     public void do_to_zach_jurnal(){
         driver.navigate().to(url3);
-        Boolean flag=hhelp.IsElementVisible(By.className("blockTitle"));
+        Boolean flag=IsElementVisible(By.className("blockTitle"));
         if(flag)
             if(driver.findElement(By.className("blockTitle")).getText()!="Журнал посещений")
                 Assert.fail("Не та страница");
