@@ -205,7 +205,7 @@ public class Helper {
     {
         try
         {
-            var iv = driver.findElement(iClassName).isDisplayed();
+            boolean iv = driver.findElement(iClassName).isDisplayed();
             if (iv) { return true; } else { return false; }
         }
         catch (NoSuchElementException e) { return false; } // если элемент вообще не найден
