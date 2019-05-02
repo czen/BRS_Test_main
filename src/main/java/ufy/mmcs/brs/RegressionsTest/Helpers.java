@@ -14,8 +14,8 @@ public class Helpers {
     private static final long DEFAULT_TIMEOUT = 10;//300;
     protected WebDriverWait wait;
     protected WebDriver driver;
-    private String ChromeDriver="D:\\MyWork\\Drivers\\chromedriver.exe";
-    private String FireFoxDriver="D:\\MyWork\\Drivers\\geckodriver.exe";
+    private String ChromeDriver="/home/user/chromedriver";
+    private String FireFoxDriver="/home/user/chromedriver";
 
     void timeouts_set(){
         driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
