@@ -78,7 +78,7 @@ public class Helpers {
                 Assert.fail("Неверный логин/пароль для аккаунта");
 
         }
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
 
         // driver.findElement(By.id("grade")).click();
         if( IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
@@ -95,7 +95,7 @@ public class Helpers {
     }
 
     public Boolean authorization(String login, String pass){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
 
         // driver.findElement(By.id("grade")).click();
         if(IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
@@ -117,11 +117,11 @@ public class Helpers {
         driver.get("http://testgrade.sfedu.ru/sign/out");
         //    wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
         //   if ( !driver.findElement(By.id("password")).isDisplayed()) {
-        if(! IsElementVisible(By.id("password"))){
+        if(! IsElementVisible(By.id("tab-news"))){
             driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[3]/a[2]")).click();   // fa fa-sign-out fa-bg fa-fw //*[@id="wrap"]/div[2]/div[3]/a[2]/i
         }
         else {
-            if(! IsElementVisible(By.id("password"))) {
+            if(! IsElementVisible(By.id("tab-news"))) {
                 Assert.fail("Не удалось выйти из аккаунта ");
             }
         }

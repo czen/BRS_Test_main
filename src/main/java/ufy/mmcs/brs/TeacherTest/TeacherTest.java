@@ -20,7 +20,7 @@ public class TeacherTest extends Helper {
         }
         timeouts_set();
         go_home();
-
+        if_grade_visiable();
     }
 
     @AfterClass

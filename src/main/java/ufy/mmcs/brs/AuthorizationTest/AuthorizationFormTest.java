@@ -10,11 +10,11 @@ import org.testng.annotations.*;
 //import Helpers;
 
 
-public class AuthorizationFormTest {
+public class AuthorizationFormTest extends Helper{
 
-    private WebDriver driver;
+   /* private WebDriver driver;
     private WebDriverWait wait;
-    private Helper hhelp;
+    private Helper hhelp;*/
     /*  @BeforeClass // Runs this method before the first test method in the current class is invoked
       public void setUp() {
           // Create a new instance of the Firefox driver
@@ -27,16 +27,17 @@ public class AuthorizationFormTest {
     @BeforeClass// @BeforeTest
     protected void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
         if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "D:\\MyWork\\Drivers\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
             driver = new ChromeDriver();
         } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", "D:\\MyWork\\Drivers\\geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
         }
 
-        hhelp = new Helper(driver);
+      //  hhelp = new Helper(driver);
         //  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        wait=new WebDriverWait(driver, 20);
+      //  wait=new WebDriverWait(driver, 20);
+        timeouts_set();
     }
 
 
@@ -61,176 +62,176 @@ public class AuthorizationFormTest {
    */
     @Test // Marking this method as part of the test
     public void non_login_non_pswd_into_form() {
-        hhelp.go_home();
-        hhelp.if_grade_visiable();
+        go_home();
+        if_grade_visiable();
 
         //driver.findElement(By.id("login")).sendKeys("ELLA");
         //driver.findElement(By.id("password")).sendKeys("22222");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
-        if(hhelp.IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+        if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText();
          /*   if(hhelp.IsElementVisible(By.id("username")))
                 Assert.fail("Выполнен вход в аккаунт");*/ //Можно оставить, время выполнения увеличится, покроется еще один случай, но только в этом месте
             Assert.assertEquals(error_text, "Неверный логин и/или пароль!");
         }
         else{
-            hhelp.exit();
+            exit();
             Assert.fail("Нет сообщения об ошибке");
         }
     }
 
     @Test // Marking this method as part of the test
     public void right_login_non_pswd_into_form() {
-        hhelp.go_home();
-        hhelp.if_grade_visiable();
+        go_home();
+        if_grade_visiable();
 
         driver.findElement(By.id("login")).sendKeys("ELLA");
         //driver.findElement(By.id("password")).sendKeys("22222");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
-        if(hhelp.IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+        if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
             /*if(hhelp.IsElementVisible(By.id("username")))
                 Assert.fail("Выполнен вход в аккаунт");*/
             Assert.assertEquals(error_text, "Неверный логин и/или пароль!");
         }
         else{
-            hhelp.exit();
+            exit();
             Assert.fail("Нет сообщения об ошибке");
         }
     }
 
     @Test // Marking this method as part of the test
     public void non_login_right_pwd_into_form() {
-        hhelp.go_home();
-        hhelp.if_grade_visiable();// driver.findElement(By.id("grade")).click();
+        go_home();
+        if_grade_visiable();// driver.findElement(By.id("grade")).click();
 
         //driver.findElement(By.id("login")).sendKeys("ELLA");
         driver.findElement(By.id("password")).sendKeys("22222");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
-        if(hhelp.IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+        if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
            /* if(hhelp.IsElementExists(By.id("username")))
                 Assert.fail("Выполнен вход в аккаунт");*/
             Assert.assertEquals(error_text, "Неверный логин и/или пароль!");
         }
         else{
-            hhelp.exit();
+            exit();
             Assert.fail("Нет сообщения об ошибке");
         }
     }
 
     @Test // Marking this method as part of the test
     public void wrong_login_wrong_pwd_into_form() {
-        hhelp.go_home();
-        hhelp.if_grade_visiable();
+        go_home();
+        if_grade_visiable();
 
         driver.findElement(By.id("login")).sendKeys("EL");
         driver.findElement(By.id("password")).sendKeys("2222");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
-        if(hhelp.IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+        if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
            /* if(hhelp.IsElementVisible(By.id("username")))
                 Assert.fail("Выполнен вход в аккаунт");*/
             Assert.assertEquals(error_text, "Неверный логин и/или пароль!");
         }
         else{
-            hhelp.exit();
+            exit();
             Assert.fail("Нет сообщения об ошибке");
         }
     }
 
     @Test // Marking this method as part of the test
     public void wrong_login_non_pwd_into_form() {
-        hhelp.go_home();
-        hhelp.if_grade_visiable();
+        go_home();
+        if_grade_visiable();
 
         driver.findElement(By.id("login")).sendKeys("EL");
         //driver.findElement(By.id("password")).sendKeys("2222");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
-        if(hhelp.IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+        if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
            /* if(hhelp.IsElementVisible(By.id("username")))
                 Assert.fail("Выполнен вход в аккаунт");*/
             Assert.assertEquals(error_text, "Неверный логин и/или пароль!");
         }
         else{
-            hhelp.exit();
+            exit();
             Assert.fail("Нет сообщения об ошибке");
         }
     }
 
     @Test // Marking this method as part of the test
     public void non_login_wrong_pwd_into_form() {
-        hhelp.go_home();
-        hhelp.if_grade_visiable();
+        go_home();
+        if_grade_visiable();
 
         //driver.findElement(By.id("login")).sendKeys("EL");
         driver.findElement(By.id("password")).sendKeys("2222");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
-        if(hhelp.IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+        if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
            /* if(hhelp.IsElementVisible(By.id("username")))
                 Assert.fail("Выполнен вход в аккаунт");*/
             Assert.assertEquals(error_text, "Неверный логин и/или пароль!");
         }
         else{
-            hhelp.exit();
+            exit();
             Assert.fail("Нет сообщения об ошибке");
         }
     }
 
     @Test // Marking this method as part of the test
     public void wrong_login_right_pwd_into_form() {
-        hhelp.go_home();
-        hhelp.if_grade_visiable();
+        go_home();
+        if_grade_visiable();
 
         driver.findElement(By.id("login")).sendKeys("EL");
         driver.findElement(By.id("password")).sendKeys("22222");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
-        if(hhelp.IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+        if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
             /*if(hhelp.IsElementVisible(By.id("username")))
                 Assert.fail("Выполнен вход в аккаунт");*/
             Assert.assertEquals(error_text, "Неверный логин и/или пароль!");
         }
         else{
-            hhelp.exit();
+            exit();
             Assert.fail("Нет сообщения об ошибке");
         }
     }
 
     @Test // Marking this method as part of the test
     public void right_login_wrong_pwd_into_form() {
-        hhelp.go_home();
-        hhelp.if_grade_visiable();
+        go_home();
+        if_grade_visiable();
 
         driver.findElement(By.id("login")).sendKeys("ELLA");
         driver.findElement(By.id("password")).sendKeys("2222");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
-        if(hhelp.IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
+        if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText(); //EventItem error
            /* if(hhelp.IsElementVisible(By.id("username")))
                 Assert.fail("Выполнен вход в аккаунт");*/
             Assert.assertEquals(error_text, "Неверный логин и/или пароль!");
         }
         else{
-            hhelp.exit();
+            exit();
             Assert.fail("Нет сообщения об ошибке");
         }
     }

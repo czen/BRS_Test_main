@@ -64,12 +64,12 @@ public class ForTeacherAccaunt extends Helpers{
     }
 
     @Test
-    public void do_to_zach_jurnal(){
-        driver.navigate().to(url3);
+    public void do_to_zach_jurnal(){ //этот падает-нормально
+        driver.navigate().to(url4);
         Boolean flag=IsElementVisible(By.className("blockTitle"));
         if(flag)
             if(driver.findElement(By.className("blockTitle")).getText()!="Журнал посещений")
                 Assert.fail("Не та страница");
-        Assert.assertTrue(flag,"Не загрузилась страница "+url3);
+        Assert.assertTrue(flag,"Не загрузилась страница "+url4);
     }
 }

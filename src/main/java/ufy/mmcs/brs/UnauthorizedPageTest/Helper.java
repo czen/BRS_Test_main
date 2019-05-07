@@ -66,4 +66,9 @@ public Boolean IsElementSelectTab(By classname){
         return s.contains("rgb(1, 131, 206)");
 
 }
+
+    public void if_grade_visiable(){
+        if( IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
+    }
+
 }

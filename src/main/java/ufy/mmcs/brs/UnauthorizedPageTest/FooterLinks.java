@@ -38,9 +38,10 @@ public class FooterLinks extends Helper
     @Test
     public void go_to_forgotten_pwd(){
         go_home();
+        if_grade_visiable();
         if(!IsElementVisible(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]")))
             Assert.fail("Нет элемента Забыли пароль");
-        WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]"));
+        WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[3]"));
         Assert.assertEquals(href.getText(),"Забыли пароль?","Не соответсвет текст");
         href.click();
         Assert.assertTrue(IsElementVisible(By.id("remind")),"Не появилась кнопка Восстановить");
@@ -49,10 +50,13 @@ public class FooterLinks extends Helper
     @Test
     public void go_to_home_after_forgotten_pwd(){
         go_home();
+        if_grade_visiable();
+
+
         if(!IsElementVisible(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]")))
             Assert.fail("Нет элемента Забыли пароль");
-        WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]"));
-        // Assert.assertEquals(href.getText(),"Забыли пароль?","е соответсвет текст");
+        WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[3]"));
+         Assert.assertEquals(href.getText(),"Забыли пароль?","е соответсвет текст");
         href.click();
         //Assert.assertTrue(IsElementVisible(By.id("remind")),"Не появилась кнопка Восстановить");
         Assert.assertTrue(IsElementVisible(By.xpath("//*[@id=\"wrap\"]/div[2]/div[1]/div/div[1]/div[2]/a")),"Нет элемента перехода по сссылке домой");
@@ -65,20 +69,22 @@ public class FooterLinks extends Helper
     @Test
     public void go_to_activ_akk(){
         go_home();
-        if(!IsElementVisible(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[1]")))
+        if_grade_visiable();
+        if(!IsElementVisible(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]")))
             Assert.fail("Нет элемента Активировать аккаунт");
-        WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[1]"));
+        WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]"));
         Assert.assertEquals(href.getText(),"Активировать аккаунт","Не соответсвет текст");
         href.click();
-        Assert.assertTrue(IsElementVisible(By.id("signup_b")),"Не появилась кнопка Восстановить");
+        Assert.assertTrue(IsElementVisible(By.id("signup_b")),"Не появилась кнопка Активировать");
     }
 
     @Test
     public void go_to_home_after_activ_akk(){
         go_home();
-        if(!IsElementVisible(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[1]")))
+        if_grade_visiable();
+        if(!IsElementVisible(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]")))
             Assert.fail("Нет элемента Активировать аккаунт");
-        WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[1]"));
+        WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]"));
         // Assert.assertEquals(href.getText(),"Активировать аккаунт","Не соответсвет текст");
         href.click();
         //Assert.assertTrue(IsElementVisible(By.id("signup_b")),"Не появилась кнопка Восстановить");

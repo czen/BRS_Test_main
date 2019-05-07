@@ -26,6 +26,7 @@ public class PageOfDisciplin  extends Helper{
         }
         timeouts_set();
         go_home();
+        if_grade_visiable();
         authorization("student");
     }
 

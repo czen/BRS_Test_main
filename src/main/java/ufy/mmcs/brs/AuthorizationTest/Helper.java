@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 //import java.util.NoSuchElementException;
 
 public class Helper {
-    private WebDriverWait wait;
-    private WebDriver driver;
+    protected WebDriverWait wait;
+    protected WebDriver driver;
     private static final long DEFAULT_TIMEOUT = 10;//300;
     private String ChromeDriver="D:\\MyWork\\Drivers\\chromedriver.exe";
     private String FireFoxDriver="D:\\MyWork\\Drivers\\geckodriver.exe";
@@ -31,7 +31,7 @@ public class Helper {
 
     public int last_semestr(){ return 10;}
 
-    Helper(){
+   /* Helper(){
         System.setProperty("webdriver.chrome.driver", ChromeDriver);
         driver = new ChromeDriver();
         driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -47,9 +47,9 @@ public class Helper {
         wait=new WebDriverWait(driver, DEFAULT_TIMEOUT);
         this.driver=driver;
     }
+*/
 
-    //роде как не нyжно....
-    static void timeouts_set(WebDriver driver,WebDriverWait wait){
+    public void timeouts_set(){
         driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -104,7 +104,7 @@ public class Helper {
                 Assert.fail("Неверный логин/пароль для аккаунта");
 
         }
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
 
         // driver.findElement(By.id("grade")).click();
         if( IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
@@ -121,10 +121,11 @@ public class Helper {
     }
 
     public Boolean authorization(String login, String pass){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
 
         // driver.findElement(By.id("grade")).click();
         if(IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
+
         driver.findElement(By.id("login")).sendKeys(login);
         driver.findElement(By.id("password")).sendKeys(pass);
         driver.findElement(By.id("signin_b")).click();
@@ -141,13 +142,12 @@ public class Helper {
 
     public void exit(){
         driver.get("http://testgrade.sfedu.ru/sign/out");
-        //    wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
-        //   if ( !driver.findElement(By.id("password")).isDisplayed()) {
-        if(! IsElementVisible(By.id("password"))){
+
+        if(! IsElementVisible(By.id("tab-news"))){
             driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[3]/a[2]")).click();   // fa fa-sign-out fa-bg fa-fw //*[@id="wrap"]/div[2]/div[3]/a[2]/i
         }
         else {
-            if(! IsElementVisible(By.id("password"))) {
+            if(! IsElementVisible(By.id("tab-news"))) {
                 Assert.fail("Не удалось выйти из аккаунта ");
             }
         }
