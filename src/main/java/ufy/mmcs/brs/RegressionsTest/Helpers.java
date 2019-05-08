@@ -14,7 +14,7 @@ public class Helpers {
     private static final long DEFAULT_TIMEOUT = 10;//300;
     protected WebDriverWait wait;
     protected WebDriver driver;
-    private String ChromeDriver="D:\\MyWork\\Drivers\\chromedriver.exe";
+    private String ChromeDriver="/usr/local/bin/chromedriver";
     private String FireFoxDriver="D:\\MyWork\\Drivers\\geckodriver.exe";
 
     void timeouts_set(){

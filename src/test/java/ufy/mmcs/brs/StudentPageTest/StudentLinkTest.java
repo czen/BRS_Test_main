@@ -17,12 +17,11 @@ public class StudentLinkTest {
     @BeforeClass// @BeforeTest
     protected void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
         if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "C:\\Users\\Sara\\Desktop\\Drivers\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
             driver = new ChromeDriver();
         } else if (browser.equals("firefox")) {
             System.setProperty("webdriver.gecko.driver", "C:\\Users\\Sara\\Desktop\\Drivers\\geckodriver.exe");
-            driver = new FirefoxDriver();
-        }
+            driver = new FirefoxDriver();        }
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://testgrade.sfedu.ru/");
         driver.findElement(By.id("grade")).click();

@@ -13,7 +13,7 @@ public class Helper {
     protected WebDriverWait wait;
     protected WebDriver driver;
     private static final long DEFAULT_TIMEOUT = 10;//300;
-    private String ChromeDriver="D:\\MyWork\\Drivers\\chromedriver.exe";
+    private String ChromeDriver="/usr/local/bin/chromedriver";
     private String FireFoxDriver="D:\\MyWork\\Drivers\\geckodriver.exe";
 
     private String student_login="ELLA";

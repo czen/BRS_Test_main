@@ -23,7 +23,7 @@ public class FormTest {
     @BeforeClass// @BeforeTest
     protected void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
         if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "D:\\MyWork\\Drivers\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
             driver = new ChromeDriver();
         } else if (browser.equals("firefox")) {
             System.setProperty("webdriver.gecko.driver", "D:\\MyWork\\Drivers\\geckodriver.exe");
