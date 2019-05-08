@@ -23,11 +23,11 @@ public class SumOfMarks {
     protected void  getDriver(@Optional("chrome") String browser) {
         if (browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver",
-                    "C:\\Users\\Sara\\Desktop\\Drivers\\chromedriver.exe");
+                    "/usr/local/bin/chromedriver");
             driver = new ChromeDriver();
         } else if (browser.equals("firefox")) {
             System.setProperty("webdriver.gecko.driver",
-                    "C:\\Users\\Sara\\Desktop\\Drivers\\geckodriver.exe");
+                    "/usr/local/bin/chromedriver");
             driver = new FirefoxDriver();
         }
 
