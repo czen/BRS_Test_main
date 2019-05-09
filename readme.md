@@ -68,5 +68,7 @@ https://www.jetbrains.com/idea/download/index.html#section=windows
 * Через командную строку. Тут тоже используются xml-файлы.___
 https://qa-help.ru/questions/kak-zapustit-testng-iz-komandnoj-stroki
 
+В файле config.ini лежат пути к драйверам для запуска браузеров. Он должен находиться в корне проекта или можно указать путь к нему через системную переменную Driver_Path (там требуется спец. вид пути: вместо одного должно быть два слэша \\). И надо заменить значение флага use_path_from_env на true в каждом Helper классе (неудобно, но пока так).
+
 P.S. Часть тестов уже была написана Ангелиной и находится здесь 
 http://gitlab.mmcs.sfedu.ru:82/it-lab/gradeUItests/blob/master/UnitTestProject1/
