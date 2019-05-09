@@ -47,7 +47,7 @@ public class SimpleTests extends  Helpers{
     @Test
     public void go_to_home(){
         driver.navigate().to(url1);
-        Boolean flag=IsElementVisible(By.id("signin_b"));
+        Boolean flag=IsElementVisible(By.id("signopenidin_b"));
         Assert.assertTrue(flag,"Не загрузилась страница");
     }
 
@@ -61,7 +61,7 @@ public class SimpleTests extends  Helpers{
     @Test
     public void go_to_sign_in(){
         driver.navigate().to(url3);
-        Boolean flag=IsElementVisible(By.id("signin_b"));
+        Boolean flag=IsElementVisible(By.id("signopenidin_b"));
         Assert.assertTrue(flag,"Не загрузилась страница");
     }
 

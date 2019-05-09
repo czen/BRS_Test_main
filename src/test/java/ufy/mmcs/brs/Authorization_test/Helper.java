@@ -1,9 +1,9 @@
-package ufy.mmcs.brs.RegressionsTest;
+package ufy.mmcs.brs.Authorization_test;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -14,21 +14,21 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-public class Helpers {
-    private static final long DEFAULT_TIMEOUT = 10;//300;
+public class Helper {
+
     protected WebDriverWait wait;
     protected WebDriver driver;
+    private static final long DEFAULT_TIMEOUT = 10;//300;
     //private String ChromeDriver="D:\\MyWork\\Drivers\\chromedriver.exe";
     //private String FireFoxDriver="D:\\MyWork\\Drivers\\geckodriver.exe";
     static private String config_path=".\\config.ini";
     static private boolean use_path_from_env=false;
 
-    void timeouts_set(){
-        driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        wait=new WebDriverWait(driver, DEFAULT_TIMEOUT);
-    }
+    private String student_login="ELLA";
+    private String teacher_login="dem";
+    protected String dekanat_login="bravit";
+    protected String rs_login="rs";
+    protected String pwd="22222";
 
     private String get_config_file_path_from_env(){
         //config_path = System.getenv("Driver_Path");
@@ -36,7 +36,7 @@ public class Helpers {
         return  System.getenv("Driver_Path");
     }
 
-     public  String get_chrome_driver()  {
+    public  String get_chrome_driver()  {
         FileInputStream fis=null;
         Properties props = new Properties();
         try
@@ -96,14 +96,36 @@ public class Helpers {
         }
     }
 
-    private String student_login="ELLA";
-    private String teacher_login="dem";
-    protected String dekanat_login="bravit";
-    protected String rs_login="rs";
-    protected String pwd="22222";
+    public int last_semestr(){ return 10;}
+
+    public void timeouts_set(){
+        driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        wait=new WebDriverWait(driver, DEFAULT_TIMEOUT);
+    }
 
     public void if_grade_visiable(){
         if( IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
+    }
+
+    public String authorization() {
+        //driver.get("http://testgrade.sfedu.ru/");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+
+        // driver.findElement(By.id("grade")).click();
+        if(IsElementExists(By.id("grade"))) driver.findElement(By.id("grade")).click();
+        driver.findElement(By.id("login")).sendKeys(student_login);
+        driver.findElement(By.id("password")).sendKeys(pwd);
+        driver.findElement(By.id("signin_b")).click();
+
+        // wait.until(ExpectedConditions.textToBe(By.className("main_top"),"Дисциплины"));
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("main_top"))) ;
+
+        if(! IsElementVisible(By.id("username")))
+            Assert.fail("Не удалось войти в аккаунт "+student_login+" "+pwd);
+
+        return "Элла Кораблина";
     }
 
     public String authorization(String type){
@@ -152,6 +174,7 @@ public class Helpers {
 
         // driver.findElement(By.id("grade")).click();
         if(IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
+
         driver.findElement(By.id("login")).sendKeys(login);
         driver.findElement(By.id("password")).sendKeys(pass);
         driver.findElement(By.id("signin_b")).click();
@@ -168,8 +191,7 @@ public class Helpers {
 
     public void exit(){
         driver.get("http://testgrade.sfedu.ru/sign/out");
-        //    wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
-        //   if ( !driver.findElement(By.id("password")).isDisplayed()) {
+
         if(! IsElementVisible(By.id("tab-news"))){
             driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[3]/a[2]")).click();   // fa fa-sign-out fa-bg fa-fw //*[@id="wrap"]/div[2]/div[3]/a[2]/i
         }
@@ -180,12 +202,38 @@ public class Helpers {
         }
     }
 
+    void choose_semestr(String sem){ //ID
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("semesterChangerSelection")));
+        String was_sem="1";
+        try {
+            was_sem= driver.findElement(By.className("semesterChangerSelection")).getText();
+            driver.findElement(By.className("semesterChangerSelection")).click();
+        }
+        catch (ElementNotVisibleException e){
+            Assert.fail("Семестр с указанным идeнтивикатором не существует: "+sem);
+
+        }
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("switchSemester")));
+
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(sem)));
+            driver.findElement(By.id(sem)).click();
+        }
+        catch(NoSuchElementException e){
+            Assert.fail("Семестр с указанным идeнтивикатором не существует: "+sem);
+        }
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("semesterChangerSelection"))); // visibilityOfElementLocated(By.className("main_top")));
+        // if(IsElementExists(By.className("semesterSwitcherBtn")))
+        Assert.assertEquals(driver.findElement(By.className("semesterChangerSelection")).getText(), was_sem,"Не сменился семестр "+was_sem);
+    }
+
     /// <summary>
 /// Метод проверяет наличие элемента на странице и возвращает true/false (существует/не существует).
 /// "iClassName" = By.Id("id"), By.CssSelector("selector") и т.д.
 /// </summary>
-    public Boolean IsElementExists(By iClassName) {
-        // в метод передаётся "iClassName" это By.Id("id_elementa"), By.CssSelector("selector") и т.д.
+    public Boolean IsElementExists(By iClassName) {// в метод передаётся "iClassName" это By.Id("id_elementa"), By.CssSelector("selector") и т.д.
         try
         {
             driver.findElement(iClassName);
@@ -209,22 +257,6 @@ public class Helpers {
         }
         catch (NoSuchElementException e) { return false; } // если элемент вообще не найден
     }
-
-    //не используется, для справки и истории, нужен другой формат пути: с двумя \\
-    public  String get_config_file_path_from_env_another_variant(){
-        //но должен быть другой формат значения переменной: с двумя \\
-        String myEnvVar="";
-        try{
-            Properties env = new Properties();
-            env.load(Runtime.getRuntime().exec("cmd /c set").getInputStream());
-            myEnvVar = (String)env.get("Driver_Path");
-        }
-        catch(IOException bomErr){
-            bomErr.printStackTrace();
-            Assert.fail("Не читается системная переменная " + bomErr);
-        }
-        return  myEnvVar;
-    }
-
-
 }
+
+

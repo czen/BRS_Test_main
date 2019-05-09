@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 //import java.util.NoSuchElementException;
@@ -17,8 +21,10 @@ public class Helper {
     protected WebDriverWait wait;
     protected WebDriver driver;
     private static final long DEFAULT_TIMEOUT = 10;//300;
-    private String ChromeDriver="/usr/local/bin/chromedriver";
-    private String FireFoxDriver="D:\\MyWork\\Drivers\\geckodriver.exe";
+    //private String ChromeDriver="D:\\MyWork\\Drivers\\chromedriver.exe";
+    //private String FireFoxDriver="D:\\MyWork\\Drivers\\geckodriver.exe";
+    static private String config_path=".\\config.ini";
+    static private boolean use_path_from_env=false;
 
     private String student_login="ELLA";
     private String teacher_login="dem";
@@ -26,28 +32,73 @@ public class Helper {
     protected String rs_login="rs";
     protected String pwd="22222";
 
-    public  String get_chrome_driver(){ return ChromeDriver;}
-    public  String get_firefox_driver(){ return FireFoxDriver;}
+    private String get_config_file_path_from_env(){
+        //config_path = System.getenv("Driver_Path");
+        // можно менять в функции сам путь, тогда просто добавляется ее вызов в гет_драйвер, а так присваивать надо
+        return  System.getenv("Driver_Path");
+    }
+
+    public  String get_chrome_driver()  {
+        FileInputStream fis=null;
+        Properties props = new Properties();
+        try
+        {
+            if(use_path_from_env)
+                fis=new FileInputStream(new File(get_config_file_path_from_env()));
+            else
+                fis = new FileInputStream(new File(config_path));
+            props.load(fis);
+            String DRIVER_CHROME_PATH= props.getProperty("CHROME_DRIVER_PATH");
+            return DRIVER_CHROME_PATH;
+        }
+        catch (IOException e) {
+            System.err.println("ОШИБКА: Файл свойств отсуствует!");
+            e.printStackTrace();
+            Assert.fail("Не прочелся конфиг файл");
+            return "";
+        }
+        finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public  String get_firefox_driver(){
+        FileInputStream fis=null;
+        Properties props = new Properties();
+        try
+        {
+            if(use_path_from_env)
+                fis=new FileInputStream(new File(get_config_file_path_from_env()));
+            else
+                fis = new FileInputStream(new File(config_path));
+            props.load(fis);
+            String DRIVER_FF_PATH= props.getProperty("FIREFOX_DRIVER_PATH");
+            return DRIVER_FF_PATH;
+        }
+        catch (IOException e) {
+            System.err.println("ОШИБКА: Файл свойств отсуствует!");
+            e.printStackTrace();
+            Assert.fail("Не прочелся конфиг файл");
+            return "";
+        }
+        finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public int last_semestr(){ return 10;}
-
-   /* Helper(){
-        System.setProperty("webdriver.chrome.driver", ChromeDriver);
-        driver = new ChromeDriver();
-        driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        wait=new WebDriverWait(driver, DEFAULT_TIMEOUT);
-    }
-
-    Helper(WebDriver driver){
-        driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        wait=new WebDriverWait(driver, DEFAULT_TIMEOUT);
-        this.driver=driver;
-    }
-*/
 
     public void timeouts_set(){
         driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -184,8 +235,7 @@ public class Helper {
 /// Метод проверяет наличие элемента на странице и возвращает true/false (существует/не существует).
 /// "iClassName" = By.Id("id"), By.CssSelector("selector") и т.д.
 /// </summary>
-    public Boolean IsElementExists(By iClassName)
-    {// в метод передаётся "iClassName" это By.Id("id_elementa"), By.CssSelector("selector") и т.д.
+    public Boolean IsElementExists(By iClassName) {// в метод передаётся "iClassName" это By.Id("id_elementa"), By.CssSelector("selector") и т.д.
         try
         {
             driver.findElement(iClassName);
@@ -201,8 +251,7 @@ public class Helper {
 /// Метод проверяет видимость элемента на странице и возвращает true/false (видимый/не видимый).
 /// "iClassName" = By.Id("id"), By.CssSelector("selector") и т.д.
 /// </summary>
-    public Boolean IsElementVisible(By iClassName)
-    {
+    public Boolean IsElementVisible(By iClassName) {
         try
         {
             boolean iv = driver.findElement(iClassName).isDisplayed();
