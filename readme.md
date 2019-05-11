@@ -28,7 +28,8 @@ Selenium + Java + TestNG + Doxygen + Maven
 ----------------
 Для создания документации использовался Doxygen.
 
-Документация в папке, там можно подробно прочитать про каждый класс и тесты в нем находящиеся.
+Документация к проекту находится в папке "Документация". Она есть в формает html и pdf.
+Для просмотра найти и запустить index.html
 
 Установка
 --------------
@@ -48,15 +49,15 @@ Selenium + Java + TestNG + Doxygen + Maven
 т.е. путь к программе
 Добавить эти переменные в Path с "\bin"
 
-Среда разработки выбрана IDEA.
+Среда разработки выбрана IDEA https://www.jetbrains.com/idea/download/index.html#section=windows
 
-https://www.jetbrains.com/idea/download/index.html#section=windows
 Переменная с jdk может не подтянуться после утановки, следует в настройках проекта устанивить путь вручную.
 
-Для изменения документации установить Doxygen.
+Для изменения документации установить Doxygen ttp://www.doxygen.nl/download.html#srcbin
 
-Ссылка: http://www.doxygen.nl/download.html#srcbin
+Для отображения графов и графиков поставить допольнительно graphviz https://www.graphviz.org/download/
 
+Для создания конфиг файла и работы не через консоль поставить Doxywizard
 
 Запуск
 --------
@@ -69,6 +70,8 @@ https://www.jetbrains.com/idea/download/index.html#section=windows
 https://qa-help.ru/questions/kak-zapustit-testng-iz-komandnoj-stroki
 
 В файле config.ini лежат пути к драйверам для запуска браузеров. Он должен находиться в корне проекта или можно указать путь к нему через системную переменную Driver_Path (там требуется спец. вид пути: вместо одного должно быть два слэша \\). И надо заменить значение флага use_path_from_env на true в каждом Helper классе (неудобно, но пока так).
+
+Для изменения документации doxygen <config file> или через программу Doxywizard. но не забыть проверить пути к программам (например, к graphviz)
 
 P.S. Часть тестов уже была написана Ангелиной и находится здесь 
 http://gitlab.mmcs.sfedu.ru:82/it-lab/gradeUItests/blob/master/UnitTestProject1/
