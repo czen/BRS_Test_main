@@ -53,7 +53,7 @@ Selenium + Java + TestNG + Doxygen + Maven
 
 Переменная с jdk может не подтянуться после утановки, следует в настройках проекта устанивить путь вручную.
 
-Для изменения документации установить Doxygen ttp://www.doxygen.nl/download.html#srcbin
+Для изменения документации установить Doxygen http://www.doxygen.nl/download.html#srcbin
 
 Для отображения графов и графиков поставить допольнительно graphviz https://www.graphviz.org/download/
 
