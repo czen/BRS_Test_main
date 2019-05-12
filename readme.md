@@ -17,11 +17,11 @@ Selenium + Java + TestNG + Doxygen + Maven
 |	| UnauthorizedPageTest	| TabsTest		| Тесты элементов на странице для
 |	|			| FooterLinks		| неавторизированного пользователя
 |------	|-----------------------|-----------------------|------------------------------------|
-|	| StudentPageTest	| 			|
+|	| StudentPageTest	| 	PageOfDisciplin		| Кнопки на странице дисциплины у студента |
 | | TeacherTest | TacherTest | Тесты для учительского аккаунта на кнопки и на оценки |
 | | | SemestrPageTest |
 | | | SessiaPageTest |
-| | | RedactirDicTest |
+| | | RedactirDisciplinTest |
 
 
 
