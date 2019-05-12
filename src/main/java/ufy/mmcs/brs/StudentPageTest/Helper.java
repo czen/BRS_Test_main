@@ -94,7 +94,7 @@ public class Helper {
         }
     }
 
-    void timeouts_set(){
+    public void timeouts_set(){
         driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -106,8 +106,8 @@ public class Helper {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("header_wrapper")));
     }
 
-    public Boolean IsElementExists(By iClassName)
-    {// в метод передаётся "iClassName" это By.Id("id_elementa"), By.CssSelector("selector") и т.д.
+    public Boolean IsElementExists(By iClassName) {
+        // в метод передаётся "iClassName" это By.Id("id_elementa"), By.CssSelector("selector") и т.д.
         try
         {
             driver.findElement(iClassName);
@@ -119,8 +119,7 @@ public class Helper {
         }
     }
 
-    public Boolean IsElementVisible(By iClassName)
-    {
+    public Boolean IsElementVisible(By iClassName) {
         try
         {
             boolean iv = driver.findElement(iClassName).isDisplayed();

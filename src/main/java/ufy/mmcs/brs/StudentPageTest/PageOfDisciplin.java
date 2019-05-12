@@ -16,7 +16,7 @@ import java.util.List;
 public class PageOfDisciplin  extends Helper{
     @Parameters("browser")
     @BeforeClass
-    protected void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
+    public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
         if (browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", get_chrome_driver());
             driver = new ChromeDriver();

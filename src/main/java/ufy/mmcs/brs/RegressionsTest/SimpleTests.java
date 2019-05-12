@@ -22,7 +22,7 @@ public class SimpleTests extends  Helpers{
 
     @Parameters("browser")
     @BeforeClass// @BeforeTest
-    protected void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
+    public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
         if (browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", get_chrome_driver());
             driver = new ChromeDriver();

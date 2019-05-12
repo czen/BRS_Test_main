@@ -8,14 +8,25 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+/**
+ * \brief Проверки входа в аккаунт
+ *
+ *
+ * @version 1.0
+ * @author Stepanova
+ * @see Helper, AuthorizationFormTest
+ */
 public class AuthorizationTest extends Helper{
-   /* private WebDriver driver;
-    private WebDriverWait wait;
-    private Helper hhelp;*/
 
+    /** \brief Инициализация
+     *
+     * Инициализация драйвера браузера. Установка неявных ожиданий.
+     * @param browser передается из xml-файла для выбора браузера для запуска тестов. По-умолчанию = chrom
+     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
+     */
     @Parameters("browser")
-    @BeforeClass// @BeforeTest
-    protected void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
+    @BeforeClass
+    public void getDriver(@Optional("chrome") String browser) {
         if (browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", get_chrome_driver());
             driver = new ChromeDriver();
@@ -23,11 +34,23 @@ public class AuthorizationTest extends Helper{
             System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
         }
-       /* hhelp = new Helper(driver);
-        wait=new WebDriverWait(driver, 20);*/
        timeouts_set();
     }
 
+    /**
+     * \brief Авторизация под преподовательским аккаунтом
+     *
+     * Тест-кейс:
+     * 1. Открыть страницу авторизации
+     * 2. Перейти на авторизацию по логину\паролю
+     * 3. Авторизоваться под dem\22222
+     *
+     * Ожидается:
+     * 1. Наличие панели пользователя
+     * 2. Совпадение имени владельца в панели с ожидаемым
+     * 3. Совпадение полного имени владельца аккаунта с ожидаемым (Яна Михайловна Демяненко)
+     * @see Helper::if_grade_visiable, Helper::authorization
+     */
     @Test
     public void check_teacher_akk(){
         go_home();
@@ -45,6 +68,20 @@ public class AuthorizationTest extends Helper{
         Assert.assertEquals(full_username,"Яна Михайловна Демяненко","Полное имя пользователя не совпадает");
     }
 
+    /**
+     * \brief Авторизация под студенческим аккаунтом
+     *
+     * Тест-кейс:
+     * 1. Открыть страницу авторизации
+     * 2. Перейти на авторизацию по логину\паролю
+     * 3. Авторизоваться под ELLA\22222
+     *
+     * Ожидается:
+     * 1. Наличие панели пользователя
+     * 2. Совпадение имени владельца в панели с ожидаемым
+     * 3. Совпадение полного имени владельца аккаунта с ожидаемым (Элла Викторовна Кораблина)
+     * @see Helper::if_grade_visiable, Helper::authorization
+     */
     @Test
     public void check_student_akk(){
         go_home();
@@ -62,6 +99,20 @@ public class AuthorizationTest extends Helper{
         Assert.assertEquals(full_username,"Элла Викторовна Кораблина","Полное имя пользователя не совпадает");
     }
 
+    /**
+     * \brief Авторизация под аккаунтом сотрудника деканата
+     *
+     * Тест-кейс:
+     * 1. Открыть страницу авторизации
+     * 2. Перейти на траницу авторизации по логину\паролю
+     * 3. Авторизоваться под bravit\22222
+     *
+     * Ожидается:
+     * 1. Наличие панели пользователя
+     * 2. Совпадение имени владельца в панели с ожидаемым
+     * 3. Совпадение полного имени владельца аккаунта с ожидаемым (Виталий Николаевич Брагилевский)
+     * @see Helper::if_grade_visiable, Helper::authorization
+     */
     @Test
     public void check_dekanat_akk(){
         go_home();
@@ -80,6 +131,20 @@ public class AuthorizationTest extends Helper{
         Assert.assertEquals(full_username,"Виталий Николаевич Брагилевский","Полное имя пользователя не совпадает");
     }
 
+    /**
+     * \brief Авторизация под извесным аккаунтом
+     *
+     * Тест-кейс:
+     * 1. Открыть страницу авторизации
+     * 2. Перейти на траницу авторизации по логину\паролю
+     * 3. Авторизоваться под rs\22222
+     *
+     * Ожидается:
+     * 1. Наличие панели пользователя
+     * 2. Совпадение имени владельца в панели с ожидаемым
+     * 3. Совпадение полного имени владельца аккаунта с ожидаемым (Роман Борисович Штейнберг)
+     * @see Helper::if_grade_visiable, Helper::authorization
+     */
     @Test
     public void check_rb_akk(){
         go_home();
@@ -108,9 +173,16 @@ public class AuthorizationTest extends Helper{
             choose_semestr("S-"+String.valueOf(i));
     }*/
 
-    @AfterClass // Runs this method after all the test methods in the current class have been run
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
+     * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
+     */
+    @AfterClass
     public void tearDown() {
-        // Close all browser windows and safely end the session
         if(driver != null)
         {driver.quit();
             driver=null;}
