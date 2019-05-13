@@ -13,7 +13,21 @@ import org.testng.annotations.*;
 
 import java.util.List;
 
+/**\brief Тесты страницы дисциплины у студента
+ *
+ * @version 1.0
+ * @author Stepanova
+ * @see Helper
+ */
 public class PageOfDisciplin  extends Helper{
+    /** \brief Инициализация
+     *
+     * Этот метод вызывается перед выполнением всех функций этого класса
+     *
+     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий. Авторизация под студентом.
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
+     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
+     */
     @Parameters("browser")
     @BeforeClass
     public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
@@ -30,6 +44,14 @@ public class PageOfDisciplin  extends Helper{
         authorization("student");
     }
 
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
+     * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
+     */
     @AfterClass
     public void tearDown() {
         // Close all browser windows and safely end the session
@@ -37,12 +59,18 @@ public class PageOfDisciplin  extends Helper{
         {driver.quit();
             driver=null;}
     }
+    /**
+     * Тест-кейс:
+     * 1. Открыть страницу с дисциплинами
+     * 2. Нажать на элемент таблицы
 
+     Ожидается: Загрузилась страница этой дисципплины
+     */
     @Test
     public void go_to_balls(){
         go_home();
         List<WebElement> strs=driver.findElements(By.className("disciplineRow"));
-        Assert.assertTrue(!strs.isEmpty(),"В таблице нет дисуиплин");
+        Assert.assertTrue(!strs.isEmpty(),"В таблице нет дисциплин");
         if (!strs.get(1).findElement(By.className("discTitle")).isDisplayed())
             Assert.fail("Нет ссылки в таблиц на дисциплину ");
         strs.get(1).findElement(By.className("discTitle")).click();
@@ -51,7 +79,13 @@ public class PageOfDisciplin  extends Helper{
                 "Учебная карта дисциплины","Загрузилась не та страница ");
     }
 
+    /**
+     *Тест-кейс:
+     1. Зайти на страницу дисциплины
+     2. Нажать Журнал
 
+     Ожидается: Загрузилась страница журнала
+     */
     @Test
     public void go_to_journal(){
         driver.navigate().to("http://testgrade.sfedu.ru/student/discipline/13337");
@@ -70,7 +104,7 @@ public class PageOfDisciplin  extends Helper{
         if(!IsElementVisible(By.xpath("/html/body/div[1]/div[4]/div[1]/div[2]/div[4]/div/div[2]")))
             Assert.fail("нет кнопки Журнал посещений");
 
-        driver.findElement(By.xpath("/html/body/div[1]/div[4]/div[1]/div[2]/div[4]/div/div[2]")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div[4]/div[1]/div[2]/div[4]/div/div[2]")).click(); //кнопка журанл
         if(!IsElementVisible(By.className("blockTitle")))
             Assert.fail("Не загрузилась страница/нет элемента");
 
@@ -79,6 +113,14 @@ public class PageOfDisciplin  extends Helper{
 
     }
 
+    /**
+     * Тест-кейс:
+     1. Открыть страницу дисциплины
+     2. Нажать Журнал
+     3. Нажать Баллы
+
+     Ожидается: Загрузилась страница с баллами
+     */
     @Test
     public void go_to_baals_after_journal(){
         driver.navigate().to("http://testgrade.sfedu.ru/student/discipline/13337/journal");
@@ -86,7 +128,7 @@ public class PageOfDisciplin  extends Helper{
                 "Журнал посещений","Загрузился не журнал посещений");
         if(!IsElementVisible(By.xpath("/html/body/div[1]/div[4]/div[1]/div[2]/div[4]/div/div[1]")))
             Assert.fail("Нет кнопки Баллы");
-        driver.findElement(By.xpath("/html/body/div[1]/div[4]/div[1]/div[2]/div[4]/div/div[1]")).click();
+        driver.findElement(By.xpath("/html/body/div[1]/div[4]/div[1]/div[2]/div[4]/div/div[1]")).click(); //кнопка баллы
         if(!IsElementVisible(By.className("pageTitle")))
             Assert.fail("Не загрузилась страница");
         Assert.assertEquals(driver.findElement(By.className("pageTitle")).getText(),"Базы данных","Загрузилась не та страница");

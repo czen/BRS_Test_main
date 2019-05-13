@@ -7,11 +7,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class ForDekanatAccaunt extends Helpers{
-   /* private WebDriver driver;
-    private WebDriverWait wait;
-    private Helpers hhelp;*/
+/** \brief Переход по ссылкам на студенческом аккаунте
 
+ * @version 1.0
+ * @author Stepanova
+ * @see Helpers, SimpleTests, ForTeacherAccaunt, ForStudentAccaunt
+ */
+public class ForDekanatAccaunt extends Helpers{
     private String url1="http://testgrade.sfedu.ru/";
     private String url2="http://testgrade.sfedu.ru/discipline/13355/rate";
     private String url3="http://testgrade.sfedu.ru/discipline/13355/exam";
@@ -33,6 +35,14 @@ public class ForDekanatAccaunt extends Helpers{
     private String url19="http://testgrade.sfedu.ru/office/support";
     private String url20="http://testgrade.sfedu.ru/discipline/14075/structure";
 
+    /**\brief Инициализация
+     *
+     * Runs this method before the first test method in the current class is invoked.
+     * Инициализация драйвера и установка ожиданий. По-умолчанию используется браузер хром.
+     * Авторизация под аккаунтом сотрудника деканата bravit\22222.
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
+     * @see tearDown, Helpers::timeouts_set, Helpers::get_chrome_driver, Helpers::get_firefox_driver
+     */
     @Parameters("browser")
     @BeforeClass// @BeforeTest
     public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
@@ -51,6 +61,14 @@ public class ForDekanatAccaunt extends Helpers{
         authorization("dekanat");
     }
 
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
+     * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
+     */
     @AfterClass
     public void tearDown() {
         exit();

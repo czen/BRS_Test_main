@@ -1,59 +1,69 @@
 /**
-\brief Тесты, посвещенные авторизации и форме авторизации, использующие авторизацию по логину\паролю
+ \brief Тесты, посвещенные авторизации и форме авторизации, использующие авторизацию по логину\паролю
  *
  * Исполняемые в пакете тест-кейсы:
+ *
  *Тест-кейс
  * 1. Ввести невалидный логин
  * 2. Поле пароль оставить пустым
  * 3. Нажать войти
- * Ожидается: сообщение об ошибке (рис. ном), нет входа в аккаунт
+
+ * Ожидается: сообщение об ошибке, нет входа в аккаунт
  *
  * Тест кейс:
  * 1. Поле логин оставить пустым
  * 2. Ввести невалидный пароль
  * 3. Нажать войти
+
  * Ожидается: сообщение об ошибке
  *
  * Тест-кейс:
  * 1. Ввести невалидный логин
  * 2. Ввести невалидный пароль
  * 3. Нажать войти
+
  * Ожидается: сообщение об ошибке
  *
  * Тест-кейс:
  * 1. Поле логин оставить пустым
  * 2. Поле пароль оставить пустым
  * 3. Нажать войти
+
  * Ожидается: сообщение об ошибке
  *
  * Тест-кейс:
  * 1. Ввести валидный логин
  * 2. Ввести невалидный пароль
  * 3. Нажать войти
+
  * Ожидается: сообщение об ошибке
  *
  * Тест-кейс:
  * 1. Ввести невалидный логин
  * 2. Ввести валидный пароль
  * 3. Нажать войти
+
  * Ожидается: сообщение об ошибке
  *
  * Тест-кейс:
  * 1. Ввести валидный логин
  * 2. Поле пароль оставить пустым
  * 3. Нажать войти
+
  * Ожидается: сообщение об ошибке
  *
  * Тест-кейс
  * 1. Поле логин оставить пустым
  * 2. Ввести валидный пароль
  * 3. Нажать войти
+
  * Ожидается: сообщение об ошибке
  *
  * 1. Ввести валидный логин
  * 2. Ввести валидный пароль
  * 3. Нажать войти
  * 4. Выйти из аккаунта
+
  * Ожидается:
  * 1. Нет сообщения об ошибке
  * 2. Произведен вход в аккаунт
@@ -76,34 +86,36 @@ import java.util.concurrent.TimeUnit;
 
 /** \brief Родительский класс для всех классов пакета.
  *
- * Содержит основные функции, используемые тестами
+ * Содержит основные функции, используемые тестами:
+ * Авторизация, установка ожиданий, инициализация драйвера, выход из аккаунта, переход "домой" и проверки видимости элемента
  * @version 1.0
  * @author Stepanova
  * @see AuthorizationFormTest, AuthorizationTest
  */
 public class Helper {
-    /// Переменная для использования явного ожидания
+    /// \brief Переменная для использования явного ожидания
+    /// @detailed Пример использования wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")))
     protected WebDriverWait wait;
     /// Веб-драйвер
     protected WebDriver driver;
-    /// Значение устанавливаемых ожиданий @see timeouts_set
+    /// Значение в секундах устанавливаемых ожиданий @see timeouts_set
     private static final long DEFAULT_TIMEOUT = 10;//300;
-    /// Путь к файлу конфигурации
+    /// Путь к файлу конфигурации @see get_chrome_driver
     static private String config_path=".\\config.ini";
-    /** \brief Флаг, определющий откуда будет читаться путь к конфигурационному файлу
+    /** \brief Флаг, определющий место чтения пути к конфигурационному файлу
      *
-     * Если значение = true то путь читается из системной переменной Driver_Path
-     * Если значение = false то путь считается стандартным, т.е. конем каталога
+     * Если значение = true, то путь читается из системной переменной Driver_Path
+     * Если значение = false, то путь считается стандартным, т.е. корнем каталога
      * @see config_path, get_config_file_path_from_env, config_path
      */
     static private boolean use_path_from_env=false;
-    /// Значение логина для аккаунта студента @see authorization
+    /// Логин для аккаунта студента @see authorization
     private String student_login="ELLA";
-    /// Значение логина для аккаунта преподавателя @see authorization
+    /// Логин для аккаунта преподавателя @see authorization
     private String teacher_login="dem";
-    /// Значение логина для сотрудника деканата @see authorization
+    /// Логин для сотрудника деканата @see authorization
     private String dekanat_login="bravit";
-    /// Значение логина для аккаунта Романа Борисовича @see authorization
+    /// Логин для аккаунта Романа Борисовича @see authorization
     private String rs_login="rs";
     /// Общий пароль для всех аккаунтов @see authorization
     private String pwd="22222";
@@ -111,7 +123,7 @@ public class Helper {
     /** @brief Читает путь к конфигурационному файлу проекта из системной переменной Driver_Path
 
      * @see get_chrome_driver, get_firefox_driver, use_path_from_env, config_path
-     * @todo Можно изменить так, что функция будет менять "стандартый" путь к конфигурационному файлу
+     * Можно изменить так, что функция будет менять "стандартый" путь к конфигурационному файлу
      * @return путь к конфигурационному файлу
      */
     public String get_config_file_path_from_env(){
@@ -120,13 +132,13 @@ public class Helper {
         return  System.getenv("Driver_Path");
     }
 
-    /** \brief Чтение пути к драйвра браузера Хром из конфигурационного файла
+    /** \brief Чтение пути к драйверу браузера Хром из конфигурационного файла
      *
      * Читает путь к файлу драйвера Хрома из файла настроек, путь к файлу настроек либо указывается через системную переменную
      * Driever_Path, либо считается стандартным - корнем каталога
      * @return путь к драйверу браузера хром
      * @see get_firefox_driver, get_config_file_path_from_env, use_path_from_env
-     * @throws IOException не удалось прочитать файл
+     * @throws IOException Не удалось прочитать файл
      */
     public  String get_chrome_driver()  {
         FileInputStream fis=null;
@@ -158,13 +170,13 @@ public class Helper {
         }
     }
 
-    /** \brief Чтение пути к драйвра браузера ФФ из конфигурационного файла
+    /** \brief Чтение пути к драйверу браузера ФФ из конфигурационного файла
      *
      * Читает путь к файлу драйвера ФФ из файла настроек, путь к файлу настроек либо указывается через системную переменную
      * Driever_Path, либо считается стандартным - корнем каталога
      * @return путь к драйверу браузера хром
      * @see get_firefox_driver, get_config_file_path_from_env, use_path_from_env
-     * @throws IOException не удалось прочитать файл
+     * @throws IOException Не удалось прочитать файл
      */
     public  String get_firefox_driver(){
         FileInputStream fis=null;
@@ -196,14 +208,6 @@ public class Helper {
         }
     }
 
-    /** \brief Значение последнего семестра в системе
-     *
-     * Сейчас последний семестр - это 10 семестр
-     * @return Возвращает числовой эквивалент последнего семестра
-     * @warning Каждый семестр следует изменять это значение
-     */
-    public int last_semestr(){ return 10;}
-
     /**
      * \brief Устанавливает значения ожиданий для драйвера
      * @see DEFAULT_TIMEOUT, AuthorizationTest::getDriver
@@ -218,14 +222,15 @@ public class Helper {
     /** \brief Переключение на авторизацию по логину\паролю
      *
      * У главной неавторизированной страницы может быть два варианта загрузки: авторизация по логину и авторизация по логину\паролю
-     * В тестах используется авторизация по логину\паролю. И эта функция переключает страницу, если загрузилась не та страница авторизации.
+     * В тестах используется авторизация по логину\паролю. И эта функция переключает на эту страницу, если загрузилась дргуая.
      @see authorization
      */
     public void if_grade_visiable(){
-        if( IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
+        if( IsElementVisible(By.id("grade")))
+            driver.findElement(By.id("grade")).click();
     }
 
-    /** \brief Авторизация под студентом
+    /** \brief Авторизация под аккаунтом студента
      *
      * Происходит авторизация под аккаунтом с доступом студента
      * @return Владелец аккаунта
@@ -235,21 +240,19 @@ public class Helper {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
 
         // driver.findElement(By.id("grade")).click();
-        if(IsElementExists(By.id("grade"))) driver.findElement(By.id("grade")).click();
+        if(IsElementExists(By.id("grade")))
+            driver.findElement(By.id("grade")).click();
         driver.findElement(By.id("login")).sendKeys(student_login);
         driver.findElement(By.id("password")).sendKeys(pwd);
         driver.findElement(By.id("signin_b")).click();
-
         // wait.until(ExpectedConditions.textToBe(By.className("main_top"),"Дисциплины"));
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("main_top"))) ;
-
         if(! IsElementVisible(By.id("username")))
             Assert.fail("Не удалось войти в аккаунт "+student_login+" "+pwd);
-
         return "Элла Кораблина";
     }
 
-    /** \brief Авторизация в системе с различным уровнем доступа
+    /** \brief Авторизация в системе с возможностью выбрать аккаунт
      *
      * Авторизация в системе для аккаунтов с различным уровнем доступа: студенческий, преподовательский, сотрудник деканата
      * @param type тип акканта под которым можно авторизироваться: student, teacher, dekanat, rb
@@ -281,45 +284,37 @@ public class Helper {
 
         }
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
-
-        // driver.findElement(By.id("grade")).click();
-        if( IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
+        if( IsElementVisible(By.id("grade")))
+            driver.findElement(By.id("grade")).click();
         driver.findElement(By.id("login")).sendKeys(login);
         driver.findElement(By.id("password")).sendKeys(pwd);
         driver.findElement(By.id("signin_b")).click();
-
         //  wait.until(ExpectedConditions.textToBe(By.className("main_top"),"Дисциплины"));
-
         if(!IsElementExists(By.id("username")))
             Assert.fail("Не удалось войти в аккаунт "+login+" "+pwd);
-
         return result;
     }
 
     /** \brief Авторизация в системе под произвольным аккаунтом
      *
-     * Позволяет авторизироваться в системе под своим или другим извесным Вам аккаунтом
+     * Позволяет авторизироваться в системе под своим или другим извесным Вам аккаунтом. На тестовом сервере для всех аккаунтов пароль = 22222
      * @param login Логин для входа в систему
-     * @param pass пароль для этого аккаунта. На тестовом сервере для всех аккаунтов пароль = 22222
+     * @param pass Пароль для этого аккаунта.
      * @return вошли\не вошли в систему
      */
     public Boolean authorization(String login, String pass){
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
-
-        // driver.findElement(By.id("grade")).click();
-        if(IsElementVisible(By.id("grade"))) driver.findElement(By.id("grade")).click();
-
+        if(IsElementVisible(By.id("grade")))
+            driver.findElement(By.id("grade")).click();
         driver.findElement(By.id("login")).sendKeys(login);
         driver.findElement(By.id("password")).sendKeys(pass);
         driver.findElement(By.id("signin_b")).click();
-
         //    wait.until(ExpectedConditions.textToBe(By.className("main_top"),"Дисциплины"));
-
         return IsElementExists(By.id("username"));
     }
 
     /**
-     * \brief  Переходит по "домашней" ссылке http://testgrade.sfedu.ru/
+     * \brief  Переход по "домашней" ссылке http://testgrade.sfedu.ru/
      * @see exit
      */
     public void go_home() {
@@ -329,11 +324,12 @@ public class Helper {
 
     /**
      * \brief  Выход из аккаунта
+     *
+     * Вначале выход по ссылке- искать кнопку дорого. если не вышло, то тогда нажимаем на кнопку "выход"
      * @see authorization
      */
     public void exit(){
         driver.get("http://testgrade.sfedu.ru/sign/out");
-
         if(! IsElementVisible(By.id("tab-news"))){
             //поиск элемента = кнопка выхода из аккаунта
             driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[3]/a[2]")).click();   // fa fa-sign-out fa-bg fa-fw
@@ -346,16 +342,15 @@ public class Helper {
     }
 
     /**
-     * \brief Переключение семестра на заданный
+     * \brief Переключение семестра на заданный по идентификатору
      *
      * Происходит переключение семестра по его идентификатору в селекторе
      * @param[in] sem Строковое значение номера семестра, например S-10, на который нужно переключиться
      * @warning Может работать плохо
      * @throws ElementNotVisibleException Не виден элемент селектора для переключения семестра
-     * @throws NoSuchElementException Указан несуществующий семестр (в списке)
+     * @throws NoSuchElementException Выбран несуществующий семестр (в списке)
      */
     public void choose_semestr(String sem){ //ID
-
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("semesterChangerSelection")));
         String was_sem="1";
         try {
@@ -382,11 +377,12 @@ public class Helper {
     }
 
     /**
-     * \brief Метод проверяет наличие элемента на странице
+     * \brief Проверяет наличие элемента на странице
      *
      * @param iClassName By.Id("id"), By.CssSelector("selector") и т.д.
-     * @return значение наличия элемента
-     * @throws NoSuchElementException Когда не нашли элемента на странице
+     * @return Наличие элемента
+     * @throws NoSuchElementException вызывается методом findElement(By by), если элемент с заданным селектором не найден на странице.
+     @see IsElementVisible
      */
     public Boolean IsElementExists(By iClassName) {// в метод передаётся "iClassName" это By.Id("id_elementa"), By.CssSelector("selector") и т.д.
         try
@@ -401,11 +397,12 @@ public class Helper {
     }
 
     /**
-     * \brief Метод проверяет видимость элемента на странице и возвращает true/false (видимый/не видимый).
+     * \brief Проверяет видимость элемента на странице.
      *
      * @param iClassName "iClassName" = By.Id("id"), By.CssSelector("selector") и т.д.
-     * @return значение видимости объекта
+     * @return Видимость объекта (видимый/не видимый)
      * @throws NoSuchElementException вызывается методом findElement(By by), если элемент с заданным селектором не найден на странице.
+     @see IsElementExists
      */
     public Boolean IsElementVisible(By iClassName) {
         try

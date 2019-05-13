@@ -20,8 +20,10 @@ public class AuthorizationTest extends Helper{
 
     /** \brief Инициализация
      *
-     * Инициализация драйвера браузера. Установка неявных ожиданий.
-     * @param browser передается из xml-файла для выбора браузера для запуска тестов. По-умолчанию = chrom
+     * Этот метод вызывается перед выполнением всех функций этого класса
+     *
+     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий.
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
      * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
      */
     @Parameters("browser")
@@ -34,7 +36,7 @@ public class AuthorizationTest extends Helper{
             System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
         }
-       timeouts_set();
+        timeouts_set();
     }
 
     /**
@@ -59,11 +61,8 @@ public class AuthorizationTest extends Helper{
         String user_name = driver.findElement(By.id("username")).getText();
         driver.findElement(By.id("username")).click();
         Assert.assertTrue(IsElementVisible(By.id("profileInfo")),"Не видно панели пользователя");
-
         String full_username=driver.findElement(By.className("username")).getText();
-
         exit();
-
         Assert.assertEquals(user_name, user_name_exp,"Вход не в тот аккаунт");
         Assert.assertEquals(full_username,"Яна Михайловна Демяненко","Полное имя пользователя не совпадает");
     }
@@ -90,11 +89,8 @@ public class AuthorizationTest extends Helper{
         String user_name = driver.findElement(By.id("username")).getText();
         driver.findElement(By.id("username")).click();
         Assert.assertTrue(IsElementVisible(By.id("profileInfo")),"Не видно панели пользователя");
-
         String full_username=driver.findElement(By.className("username")).getText();
-
         exit();
-
         Assert.assertEquals(user_name, user_name_exp,"Вход не в тот аккаунт");
         Assert.assertEquals(full_username,"Элла Викторовна Кораблина","Полное имя пользователя не совпадает");
     }
@@ -151,7 +147,7 @@ public class AuthorizationTest extends Helper{
         if_grade_visiable();
         String user_name_exp = authorization("rb");
         String user_name = driver.findElement(By.id("username")).getText();
-         driver.findElement(By.id("username")).click();
+        driver.findElement(By.id("username")).click();
         Assert.assertTrue(IsElementVisible(By.id("profileInfo")),"Не видно панели пользователя");
 
         String full_username=driver.findElement(By.className("username")).getText();

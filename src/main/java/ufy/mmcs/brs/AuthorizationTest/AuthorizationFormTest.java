@@ -7,12 +7,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
-//import Helpers;
 
 /**
  * \brief Тесты формы авторизации
  *
- * Тест-кейс:
+ * Общий тест-кейс:
  * 1. Открыть страницу
  * 2. Ввести неверные данные
  *
@@ -22,26 +21,13 @@ import org.testng.annotations.*;
  * @see AuthorizationTest, Helper
  */
 public class AuthorizationFormTest extends Helper{
-
-   /* private WebDriver driver;
-    private WebDriverWait wait;
-    private Helper hhelp;*/
-    /*  @BeforeClass // Runs this method before the first test method in the current class is invoked
-      public void setUp() {
-          // Create a new instance of the Firefox driver
-          System.setProperty("webdriver.gecko.driver","C:\\Users\\Workstation\\Desktop\\Drivers\\geckodriver.exe");
-
-          driver = new FirefoxDriver();
-          driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-      }*/
-
     /**\brief Инициализация
      *
      * Runs this method before the first test method in the current class is invoked.
-     * Инициализация драйвера и установка неявных ожиданий. По-умолчанию используется браузер хром.
+     * Инициализация драйвера и установка ожиданий. По-умолчанию используется браузер хром.
      *
-     * @param browser Выбор браузера ля запуска тестов: chrome, firefox
-     * @see tearDown, Helper::timeouts_set, Helper::get_chrome_driver
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
+     * @see tearDown, Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver
      */
     @Parameters("browser")
     @BeforeClass// @BeforeTest
@@ -68,10 +54,8 @@ public class AuthorizationFormTest extends Helper{
            driver.findElement(By.id("signin_b")).click();
            wait.until(ExpectedConditions.textToBe(By.className("main_top"),"Дисциплины"));
            String user_name = driver.findElement(By.id("username")).getText();
-
-           //driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[3]/a")).click();   // fa fa-sign-out fa-bg fa-fw
+		   //driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[3]/a")).click();   // fa fa-sign-out fa-bg fa-fw
            hhelp.exit();
-
            Assert.assertEquals(user_name, "Элла Кораблина");
        } */
 
@@ -96,11 +80,11 @@ public class AuthorizationFormTest extends Helper{
 
         String error_text;
         if(IsElementVisible(By.xpath("/html/body/div[3]/div"))) {
-            //элемент окно с ошибкой
+            //элемент - окно с ошибкой
             error_text = driver.findElement(By.xpath("/html/body/div[3]/div")).getText();
          /*   if(hhelp.IsElementVisible(By.id("username")))
                 Assert.fail("Выполнен вход в аккаунт");*/
-         //Можно оставить, время выполнения увеличится, покроется еще один случай, но только в этом месте
+            //Можно оставить, время выполнения увеличится, покроется еще один случай, но только в этом месте можно учитывать.
             Assert.assertEquals(error_text, "Неверный логин и/или пароль!","Не соответсвует текст ошибки");
         }
         else{
@@ -143,7 +127,8 @@ public class AuthorizationFormTest extends Helper{
         }
     }
 
-    /**
+    /**\brief Случай с пустым логином
+
      * Тест-кейс:
      * 1. Открыть страницу
      * 2. Перейти на авторизацию по логну\паролю
@@ -176,7 +161,8 @@ public class AuthorizationFormTest extends Helper{
         }
     }
 
-    /**
+    /**\brief Случай с невалидным логином и паролем
+
      * Тест-кейс:
      * 1. Открыть страницу
      * 2. Перейти на авторизацию по логну\паролю
@@ -209,7 +195,8 @@ public class AuthorizationFormTest extends Helper{
         }
     }
 
-    /**
+    /**\brief Случай с невалидным логином и пустым паролем
+
      * Тест-кейс:
      * 1. Открыть страницу
      * 2. Перейти на авторизацию по логну\паролю
@@ -242,7 +229,8 @@ public class AuthorizationFormTest extends Helper{
         }
     }
 
-    /**
+    /**\brief Случай с невалидным паролем и пустым логином
+
      * Тест-кейс:
      * 1. Открыть страницу
      * 2. Перейти на авторизацию по логну\паролю
@@ -275,7 +263,8 @@ public class AuthorizationFormTest extends Helper{
         }
     }
 
-    /**
+    /**\brief Случай с невалидным логином
+
      * Тест-кейс:
      * 1. Открыть страницу
      * 2. Перейти на авторизацию по логну\паролю
@@ -308,7 +297,8 @@ public class AuthorizationFormTest extends Helper{
         }
     }
 
-    /**
+    /**\brief Случай с невалидным паролем
+
      * Тест-кейс:
      * 1. Открыть страницу
      * 2. Перейти на авторизацию по логну\паролю

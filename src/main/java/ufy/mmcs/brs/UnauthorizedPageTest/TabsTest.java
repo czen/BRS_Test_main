@@ -13,7 +13,21 @@ import org.testng.annotations.*;
 
 import java.util.List;
 
+/** \brief Тесты табов на главной
+ *
+ * @version 1.0
+ * @author Stepanova
+ * @see Helper, FooterLinks
+ */
 public class TabsTest extends Helper {
+    /** \brief Инициализация
+     *
+     * Этот метод вызывается перед выполнением всех функций этого класса
+     *
+     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий.
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
+     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
+     */
     @Parameters("browser")
     @BeforeClass
     public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
@@ -24,13 +38,17 @@ public class TabsTest extends Helper {
             System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
         }
-
-        //hhelp = new Helpers(driver);
-        //wait=new WebDriverWait(driver, 20);
         timeouts_set();
-
     }
 
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
+     * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
+     */
     @AfterClass
     public void tearDown() {
         // Close all browser windows and safely end the session
@@ -39,6 +57,10 @@ public class TabsTest extends Helper {
             driver=null;}
     }
 
+    /**
+     * Проверяет название табов: Новости, Обновления, Синхронизация и их наличие на странице
+     \warning ри падении одного теста, все остальные не выполнятся. Модно разнести эти тест-кейсы по разным функциям.
+     */
     @Test
     public void tabs_names(){
         go_home();
@@ -65,6 +87,12 @@ public class TabsTest extends Helper {
         }
     }
 
+    /**
+     * Тест-кейс
+     1. Загрузить страницу
+
+     Ожидается: Таб новости активен
+     */
     @Test
     public void news_is_select_home(){
         go_home();
@@ -75,6 +103,13 @@ public class TabsTest extends Helper {
         Assert.assertTrue(IsElementSelectTab(By.id("tab-news"))," Таб новости не выбран");
     }
 
+    /**
+     * Тест-кейс
+     1. Загрузить страницу
+     2. нажать таб Новости
+
+     * Ожидается: таб новости выбран
+     */
     @Test
     public void news_is_select_yet(){
         go_home();
@@ -85,6 +120,10 @@ public class TabsTest extends Helper {
         Assert.assertTrue(IsElementSelectTab(By.id("tab-news"))," Таб новости не выбран");
     }
 
+    /**
+     * Таб Обновления не выбран на главной
+
+     */
     @Test
     void updates_is_not_select_home(){
         go_home();
@@ -93,6 +132,9 @@ public class TabsTest extends Helper {
         Assert.assertTrue(!IsElementSelectTab(By.id("tab-updates"))," Таб обновления выбран");
     }
 
+    /**
+     * Таб Синхронизация не выбран на главной
+     */
     @Test
     void syncs_is_not_select_home(){
         go_home();
@@ -101,6 +143,13 @@ public class TabsTest extends Helper {
         Assert.assertTrue(!IsElementSelectTab(By.id("tab-syncs"))," Таб синхронизация выбран");
     }
 
+    /**
+     * Тест-кейс
+     1. Загрузить страницу
+     2. Переключиться на другой таб
+
+     Ожидается: Новый таб активен
+     */
     @Test
     void syncs_click(){
         go_home();
@@ -110,6 +159,16 @@ public class TabsTest extends Helper {
         Assert.assertTrue(IsElementSelectTab(By.id("tab-syncs"))," Таб синхронизация не выбран");
     }
 
+    /**
+     Тест-кейс:
+     1. Загрузить страницу
+     2. Переключиться на другой таб
+     3. Нажать Еще
+
+     Ожидается:
+     1. Еще поменялось на Скрыть
+
+     */
     @Test
     public void syncs_expand_click(){
         go_home();
@@ -126,7 +185,15 @@ public class TabsTest extends Helper {
         expand.get(2).click();
         Assert.assertEquals(expand.get(2).getText(),"Скрыть","Не соответсвует наззвание кнопки после нажатия");
     }
+    /**
+     * Тест-кейс:
+     1. Загрузить страницу
+     2. Переключиться на другой таб
 
+     Ожидается:
+     1. Другие табы не выбраны
+
+     */
     @Test
     void upd_is_not_select_syncs(){
         go_home();
@@ -136,6 +203,14 @@ public class TabsTest extends Helper {
         Assert.assertTrue(!IsElementSelectTab(By.id("tab-updates"))," Таб синхронизация выбран");
     }
 
+    /**
+     *Тест-кейс:
+     1. Загрузить страницу
+     2. Переключиться на другой таб
+
+     Ожидается:
+     1. Другие табы не выбраны
+     */
     @Test
     void news_is_not_select_syncs(){
         go_home();
@@ -146,6 +221,13 @@ public class TabsTest extends Helper {
         Assert.assertTrue(!IsElementSelectTab(By.id("tab-news"))," Таб news выбран");
     }
 
+    /**
+     *Тест-кейс
+     1. Загрузить страницу
+     2. Переключиться на другой таб
+
+     Ожидается: Новый таб активен
+     */
     @Test
     void update_click(){
         go_home();
@@ -155,6 +237,15 @@ public class TabsTest extends Helper {
         Assert.assertTrue(IsElementSelectTab(By.id("tab-updates"))," Таб updates не выбран");
     }
 
+    /**
+     * Тест-кейс:
+     1. Загрузить страницу
+     2. Переключиться на другой таб
+     3. Нажать Еще
+
+     Ожидается:
+     1. Еще поменялось на Скрыть
+     */
     @Test
     public void upd_expand_click(){
         go_home();
@@ -171,6 +262,13 @@ public class TabsTest extends Helper {
         Assert.assertEquals(expand.get(1).getText(),"Скрыть","Не соответсвует наззвание кнопки после нажатия");
     }
 
+    /**
+     *Тест-кейс
+     1. Загрузить страницу
+     2. Переключиться на другой таб
+
+     Ожидается: Новый таб активен
+     */
     @Test
     void syncs_is_not_select_upd(){
         go_home();
@@ -180,6 +278,13 @@ public class TabsTest extends Helper {
         Assert.assertTrue(!IsElementSelectTab(By.id("tab-syncs"))," Таб синхронизация выбран");
     }
 
+    /**
+     *Тест-кейс
+     1. Загрузить страницу
+     2. Переключиться на другой таб
+
+     Ожидается: Новый таб активен
+     */
     @Test
     void news_is_not_select_upd(){
         go_home();
@@ -189,6 +294,16 @@ public class TabsTest extends Helper {
         Assert.assertTrue(!IsElementSelectTab(By.id("tab-news"))," Таб news выбран");
     }
 
+    /**
+     * Тест-кейс:
+     1. Загрузить страницу
+     2. Переключиться на другой таб (обновления)
+     3. Нажать Еще
+     4. Нажать скрыть
+
+     Ожидается:
+     1. скрыть поменялось на Еще
+     */
     @Test
     public void upd_expand_click_click(){
         go_home();
@@ -205,7 +320,16 @@ public class TabsTest extends Helper {
         expand.get(1).click();
         Assert.assertEquals(expand.get(1).getText(),"Ещё","Не соответсвует наззвание кнопки после двойного нажатия");
     }
+    /**
+     Тест-кейс:
+     1. Загрузить страницу
+     2. Переключиться на другой таб (синхронизация)
+     3. Нажать Еще
+     4. Нажать скрыть
 
+     Ожидается:
+     1. скрыть поменялось на Еще
+     */
     @Test
     public void syncs_expand_click_click(){
         go_home();

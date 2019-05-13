@@ -8,18 +8,27 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class SimpleTests extends  Helpers{
+/** \brief Переход по ссылкам без авторизации
 
-   /* private WebDriver driver;
-    private WebDriverWait wait;
-    private Helpers hhelp;*/
+ * @version 1.0
+ * @author Stepanova
+ * @see Helpers, ForTeacherAccaunt, ForStudentAccaunt, ForDekanatAccaunt
+ */
+public class SimpleTests extends  Helpers{
 
     private String url1="http://testgrade.sfedu.ru/";
     private String url2="http://testgrade.sfedu.ru/remind";
     private String url3="http://testgrade.sfedu.ru/sign/in";
     private String url4="http://testgrade.sfedu.ru/sign/up";
 
-
+    /** \brief Инициализация
+     *
+     * Этот метод вызывается перед выполнением всех функций этого класса
+     *
+     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий.
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию - chrom
+     * @see Helpers::timeouts_set, Helpers::get_chrome_driver, Helpers::get_firefox_driver, tearDown
+     */
     @Parameters("browser")
     @BeforeClass// @BeforeTest
     public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
@@ -30,12 +39,17 @@ public class SimpleTests extends  Helpers{
             System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
         }
-
-       /* hhelp = new Helpers(driver);
-        wait=new WebDriverWait(driver, 20);*/
         timeouts_set();
     }
 
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
+     * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
+     */
     @AfterClass
     public void tearDown() {
         // Close all browser windows and safely end the session

@@ -8,10 +8,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+/** \brief Переход по ссылкам на преподовательском аккаунте
+
+ * @version 1.0
+ * @author Stepanova
+ * @see Helpers, SimpleTests, ForStudentAccaunt, ForDekanatAccaunt
+ */
 public class ForTeacherAccaunt extends Helpers{
-    /* private WebDriver driver;
-     private WebDriverWait wait;
-     private Helpers hhelp;*/
     private String url1="http://testgrade.sfedu.ru/";
     private String url2="http://testgrade.sfedu.ru/discipline/13406/rate";
     private String url3="http://testgrade.sfedu.ru/discipline/13406/exam";
@@ -37,6 +40,14 @@ public class ForTeacherAccaunt extends Helpers{
     private String url23="http://testgrade.sfedu.ru/discipline/3666/settings";
     private String url24="http://testgrade.sfedu.ru/discipline/3666/teachers";
 
+    /** \brief Инициализация
+     *
+     * Этот метод вызывается перед выполнением всех функций этого класса
+     *
+     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий. Авторизация под dem/22222
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию - chrom
+     * @see Helpers::timeouts_set, Helpers::get_chrome_driver, Helpers::get_firefox_driver, tearDown
+     */
     @Parameters("browser")
     @BeforeClass// @BeforeTest
     public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
@@ -47,21 +58,28 @@ public class ForTeacherAccaunt extends Helpers{
             System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
         }
-
-      /*  hhelp = new Helpers(driver);
-        wait=new WebDriverWait(driver, 20);*/
         timeouts_set();
         go_home();
         authorization("teacher");
     }
 
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
+     * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
+     */
     @AfterClass // Runs this method after all the test methods in the current class have been run
     public void tearDown() {
+        exit();
         // Close all browser windows and safely end the session
         if(driver != null)
         {driver.quit();
             driver=null;}
     }
+
 
     @Test
     public void do_to_zach_jurnal(){ //этот падает-нормально

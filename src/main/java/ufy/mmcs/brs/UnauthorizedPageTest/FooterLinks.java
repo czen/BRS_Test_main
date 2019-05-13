@@ -7,9 +7,22 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-
+/** \brief Тесты ссылок под формой авторизации
+ *
+ * @version 1.0
+ * @author Stepanova
+ * @see Helper, FooterLinks
+ */
 public class FooterLinks extends Helper
 {
+    /** \brief Инициализация
+     *
+     * Этот метод вызывается перед выполнением всех функций этого класса
+     *
+     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий.
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
+     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
+     */
     @Parameters("browser")
     @BeforeClass
     public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
@@ -20,13 +33,17 @@ public class FooterLinks extends Helper
             System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
         }
-
-        //hhelp = new Helpers(driver);
-        //wait=new WebDriverWait(driver, 20);
         timeouts_set();
-
     }
 
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
+     * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
+     */
     @AfterClass
     public void tearDown() {
         // Close all browser windows and safely end the session
@@ -34,7 +51,12 @@ public class FooterLinks extends Helper
         {driver.quit();
             driver=null;}
     }
-
+    /**
+     Тест-кейс:
+     1. Нажать Забыли пароль
+     Ожидается:
+     1. Кнопка Восстановить
+     */
     @Test
     public void go_to_forgotten_pwd(){
         go_home();
@@ -47,16 +69,21 @@ public class FooterLinks extends Helper
         Assert.assertTrue(IsElementVisible(By.id("remind")),"Не появилась кнопка Восстановить");
     }
 
+    /**	Тест-кейс:
+     1. Нажать Забыли пароль
+     2. Нажать я вспомнил
+
+     Ожидается: загрузилась страница аутентификации
+     */
     @Test
     public void go_to_home_after_forgotten_pwd(){
         go_home();
         if_grade_visiable();
 
-
         if(!IsElementVisible(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]")))
             Assert.fail("Нет элемента Забыли пароль");
         WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[3]"));
-         Assert.assertEquals(href.getText(),"Забыли пароль?","е соответсвет текст");
+        Assert.assertEquals(href.getText(),"Забыли пароль?","е соответсвет текст");
         href.click();
         //Assert.assertTrue(IsElementVisible(By.id("remind")),"Не появилась кнопка Восстановить");
         Assert.assertTrue(IsElementVisible(By.xpath("//*[@id=\"wrap\"]/div[2]/div[1]/div/div[1]/div[2]/a")),"Нет элемента перехода по сссылке домой");
@@ -66,6 +93,11 @@ public class FooterLinks extends Helper
         Assert.assertTrue(IsElementVisible(By.id("signin_b")),"Не появилась кнопка Восстановить");
     }
 
+    /** Тест-кейс:
+     * 1. Нажать активировать аккаунт
+
+     Ожидается: Кнопка активировать
+     */
     @Test
     public void go_to_activ_akk(){
         go_home();
@@ -78,6 +110,12 @@ public class FooterLinks extends Helper
         Assert.assertTrue(IsElementVisible(By.id("signup_b")),"Не появилась кнопка Активировать");
     }
 
+    /** Тест-кейс:
+     * 1. Нажать Активировать аккаунт
+     * 2. Нажать Войти в существующий
+
+     Ожидается: загрузилась страница аутентификации
+     */
     @Test
     public void go_to_home_after_activ_akk(){
         go_home();
@@ -95,6 +133,12 @@ public class FooterLinks extends Helper
         Assert.assertTrue(IsElementVisible(By.id("signin_b")),"Не появилась кнопка Восстановить");
     }
 
+    /**
+     *Тест-кейс:
+     1. Перейти на страницу активации
+
+     Ожидается: присутсвие всех инпутов и табов на странице
+     */
     @Test
     public void activ_akk_inputs(){
         driver.navigate().to("http://testgrade.sfedu.ru/sign/up");
@@ -145,6 +189,10 @@ public class FooterLinks extends Helper
         Assert.assertTrue(!flag,errors);
     }
 
+    /**Тест-кейс:
+     1. Перейти на страницу восстановления пароля
+
+     Ожидается: присутсвие всех инпутов и табов на странице*/
     @Test
     public void forgotten_pwd_inputs(){
         driver.navigate().to("http://testgrade.sfedu.ru/remind");
@@ -176,6 +224,13 @@ public class FooterLinks extends Helper
         Assert.assertFalse(flag,errors);
     }
 
+    /**
+     *Тест-кейс:
+     1. перейти на забыли пароль
+     2. Ввести не емайл
+
+     Ожидается: Сообщение об ошибке
+     */
     @Test
     public void forgotten_pwd_page_click_wrong_inputs() {
         driver.navigate().to("http://testgrade.sfedu.ru/remind");
@@ -208,6 +263,13 @@ public class FooterLinks extends Helper
         Assert.assertFalse(flag,errors);
     }
 
+    /**
+     *Тест-кейс:
+     1. Перейти на страницу восстановления пароля
+     2. Ввести пустую строку в поле емайл
+
+     Ожидается: Сообщение об ошибке
+     */
     @Test
     public void forgotten_pwd_page_click_empty() {
         driver.navigate().to("http://testgrade.sfedu.ru/remind");
@@ -240,6 +302,13 @@ public class FooterLinks extends Helper
         Assert.assertFalse(flag,errors);
     }
 
+    /**
+     *Тест-кейс:
+     1. Перейти на страницу восстановления пароля
+     2. Ввести невалидные емайл в поле емайл
+
+     Ожидается: Сообщение об ошибке
+     */
     @Test
     public void forgotten_pwd_page_click_wrong_email(){
         driver.navigate().to("http://testgrade.sfedu.ru/remind");

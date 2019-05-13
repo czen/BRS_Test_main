@@ -8,6 +8,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+/** \brief Переход по ссылкам на студенческом аккаунте
+
+ * @version 1.0
+ * @author Stepanova
+ * @see Helpers, SimpleTests, ForTeacherAccaunt, ForDekanatAccaunt
+ */
 public class ForStudentAccaunt extends Helpers{
     /*private WebDriver driver;
     private WebDriverWait wait;
@@ -19,6 +25,14 @@ public class ForStudentAccaunt extends Helpers{
     private String url4="http://testgrade.sfedu.ru/student/discipline/3760";
     private String url5="http://testgrade.sfedu.ru/student/discipline/3760/journal";
 
+    /** \brief Инициализация
+     *
+     * Этот метод вызывается перед выполнением всех функций этого класса
+     *
+     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий. Авторизация под ELLA/22222
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию - chrom
+     * @see Helpers::timeouts_set, Helpers::get_chrome_driver, Helpers::get_firefox_driver, tearDown
+     */
     @Parameters("browser")
     @BeforeClass// @BeforeTest
     public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
@@ -37,6 +51,14 @@ public class ForStudentAccaunt extends Helpers{
         authorization("student");
     }
 
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
+     * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
+     */
     @AfterClass // Runs this method after all the test methods in the current class have been run
     public void tearDown() {
         exit();
