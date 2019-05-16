@@ -77,7 +77,7 @@ public class TeacherTest extends Helper {
             return;
         }
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("group_block")));
-      //  List<WebElement> group_tables = driver.findElements(By.className("group_block"));
+        //  List<WebElement> group_tables = driver.findElements(By.className("group_block"));
         WebElement btn_sem = get_btn_semestr(group_tables.get(1));
         btn_sem.click();
         if(!IsElementVisible(By.className("subject"))){
@@ -104,7 +104,7 @@ public class TeacherTest extends Helper {
     public void click_button_semestr_near_prosmotr_zach() {
         //Пока тут кнопка Редактирвоать еще есть
         go_home();
-       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("group_block")));
+        // wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("group_block")));
         choose_semestr("S-9");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("group_block")));
         List<WebElement> group_tables = driver.findElements(By.className("group_block"));
@@ -253,7 +253,7 @@ public class TeacherTest extends Helper {
             Assert.fail("Нет элементов таблицы");
             return;
         }
-       // List<WebElement> group_tables = driver.findElements(By.className("group_block"));
+        // List<WebElement> group_tables = driver.findElements(By.className("group_block"));
         WebElement btn_sem = get_btn_journal(group_tables.get(0));
         Assert.assertEquals(btn_sem.getText(),"Журнал","Не соответсвует название кнопки ");
     }
@@ -316,7 +316,7 @@ public class TeacherTest extends Helper {
         }
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("group_block")));
-       // group_tables = driver.findElements(By.className("group_block"));
+        // group_tables = driver.findElements(By.className("group_block"));
         WebElement btn_sem = get_btn_journal(group_tables.get(0));
         btn_sem.click();
         if(!IsElementVisible(By.className("subject"))) {
@@ -343,7 +343,7 @@ public class TeacherTest extends Helper {
         }
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("group_block")));
 
-       // group_tables = driver.findElements(By.className("group_block"));
+        // group_tables = driver.findElements(By.className("group_block"));
         WebElement btn_sem = get_btn_prosmotr(group_tables.get(0));
         btn_sem.click();
         if(!IsElementVisible(By.className("main_top"))) {
@@ -375,7 +375,7 @@ public class TeacherTest extends Helper {
         WebElement btn_sem;
         for(WebElement group: group_tables){
             if(btn_is_radactirovania(group)){
-                btn_sem= get_btn_redactir(group_tables.get(0));
+                btn_sem= get_btn_redactir(group);
                 btn_sem.click();
                 if(!IsElementVisible(By.className("main_top"))) {
                     Assert.fail("Не загрузилась страница после нажатия на кнопку Рдактирование");

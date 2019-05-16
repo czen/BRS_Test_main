@@ -122,8 +122,8 @@ public class Helper {
 
     /** @brief Читает путь к конфигурационному файлу проекта из системной переменной Driver_Path
 
-     * @see get_chrome_driver, get_firefox_driver, use_path_from_env, config_path
      * Можно изменить так, что функция будет менять "стандартый" путь к конфигурационному файлу
+     * @see get_chrome_driver, get_firefox_driver, use_path_from_env, config_path
      * @return путь к конфигурационному файлу
      */
     public String get_config_file_path_from_env(){

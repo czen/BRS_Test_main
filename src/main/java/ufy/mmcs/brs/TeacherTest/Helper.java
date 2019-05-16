@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * Авторизация, установка ожиданий, инициализация драйвера, выход из аккаунта, переход "домой" и проверки видимости элемента
  * @version 1.0
  * @author Stepanova
- * @see
+ * @see AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, TeacherTest
  */
 public class Helper {
     /// \brief Переменная для использования явного ожидания
@@ -56,9 +56,9 @@ public class Helper {
     private String pwd="22222";
 
     /** @brief Читает путь к конфигурационному файлу проекта из системной переменной Driver_Path
-
-     * @see get_chrome_driver, get_firefox_driver, use_path_from_env, config_path
+     *
      * Можно изменить так, что функция будет менять "стандартый" путь к конфигурационному файлу
+     * @see get_chrome_driver, get_firefox_driver, use_path_from_env, config_path
      * @return путь к конфигурационному файлу
      */
     private String get_config_file_path_from_env(){
@@ -487,6 +487,14 @@ public class Helper {
         return (select.getFirstSelectedOption().getText().equals("Все группы"));
     }
 
+    /**
+     * \brief Читает из ячейки выставленный балл
+     *
+     * Если ячейка пуста, вернется 0
+     * @param rowNum Номер строки
+     * @param colNum Номер колонки
+     * @return Выставленный балл
+     */
     public int Mark(int rowNum, int colNum) {
         WebElement element = driver.findElement(By.id("col_row_" + colNum + "_" + rowNum));
         WebElement field = element.findElement(By.tagName("input"));
@@ -498,6 +506,13 @@ public class Helper {
         //   return Integer.parseInt(field.getAttribute("value"));
     }
 
+    /**
+     *\brief Проверка ячейки на пустоту
+     *
+     * @param rowNum Номер строки
+     * @param colNum Номер колонки
+     * @return пусто\не пусто
+     */
     public boolean check_emty_mark(int rowNum, int colNum) {
         WebElement element = driver.findElement(By.id("col_row_" + colNum + "_" + rowNum));
         WebElement field = element.findElement(By.tagName("input"));
@@ -509,6 +524,14 @@ public class Helper {
         return false;
     }
 
+    /**
+     * \brief Возвращает балл из колонок Итог, Экзамен, Итог за семестр
+     *
+     * Нужно указать какой это столбец по номеру. Там другие стили и классы, поэтому отдельная функция
+     * @param rowNum Номер строки
+     * @param col Номер колонки
+     * @return выставленный баллл
+     */
     public int Semestr_mark(int rowNum,int col) {
         WebElement row = driver.findElement(By.id("row_" + String.valueOf(rowNum)));
         //ячейка, используется для итогов
@@ -521,6 +544,13 @@ public class Helper {
         }
     }
 
+    /**
+     * \brief Выставляет балл
+     * @param rowNum Номер строки
+     * @param colNum Номер колонки
+     * @param mark Балл, который выставляется. Строка
+     * @throws InterruptedException от ожидания
+     */
     public void set_mark(int rowNum, int colNum, String mark) throws InterruptedException {
         WebElement element = driver.findElement(By.id("col_row_" + colNum + "_" + rowNum));
         WebElement field = element.findElement(By.tagName("input"));
@@ -528,6 +558,12 @@ public class Helper {
         TimeUnit.MILLISECONDS.sleep(50);
     }
 
+    /**
+     * \brief Удаляет выставленную оценку
+     * @param rowNum Номер строки
+     * @param colNum Номер колонки
+     * @throws InterruptedException от ожидания
+     */
     public void delete_mark(int rowNum, int colNum) throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(50);
         WebElement element = driver.findElement(By.id("col_row_" + colNum + "_" + rowNum));
@@ -537,6 +573,8 @@ public class Helper {
 
         TimeUnit.SECONDS.sleep(1);
         // field.sendKeys("\n");
+        if(!check_emty_mark(rowNum,colNum))
+            Assert.fail("Не удалилась оценка row:"+rowNum+" col:"+colNum);
     }
 
 
