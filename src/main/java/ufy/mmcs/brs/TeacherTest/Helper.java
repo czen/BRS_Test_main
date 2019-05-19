@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * Авторизация, установка ожиданий, инициализация драйвера, выход из аккаунта, переход "домой" и проверки видимости элемента
  * @version 1.0
  * @author Stepanova
- * @see AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, TeacherTest
+ * @see AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, TeacherTest, MarksOfZachetPageTest, ProsmotrDisciplinPageTest, EditDisciplinPageTest, AfterClickBtnsTest
  */
 public class Helper {
     /// \brief Переменная для использования явного ожидания
@@ -569,7 +569,7 @@ public class Helper {
         WebElement element = driver.findElement(By.id("col_row_" + colNum + "_" + rowNum));
         WebElement field = element.findElement(By.tagName("input"));
         //element.clear();
-        field.sendKeys(Keys.BACK_SPACE+"\n"+Keys.ESCAPE);
+        field.sendKeys(Keys.BACK_SPACE+"" +Keys.BACK_SPACE+"\n"+Keys.ESCAPE);
 
         TimeUnit.SECONDS.sleep(1);
         // field.sendKeys("\n");

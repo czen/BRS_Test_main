@@ -1,10 +1,14 @@
 package ufy.mmcs.brs.TeacherTest;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  *\brief Тесты страниц просмотра дисциплины
@@ -57,14 +61,17 @@ public class ProsmotrDisciplinPageTest extends Helper{
     }
 
     /**
+     * Тест-кейс:
+     * 1. переходим на страницу
      *
+     * Ожидание: страица загрузилась, есть негативный поп-ап о невозможности редактирования
      */
     @Test
     public void check_prosmotr(){
         driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/structure");
         // страница просмотра . семестр 9й (2018 год весна) первая строчка
         if(!IsElementVisible(By.className("Warning"))){
-         Assert.fail("Страница не загрузилась/нет предупрежедния/это не страница просмотра ");
+            Assert.fail("Страница не загрузилась/нет предупрежедния/это не страница просмотра ");
         }
         String warning=driver.findElement(By.className("Warning")).getText();
         Assert.assertEquals(warning,"Был добавлен балл. Редактирование базовых настроек, модулей и групп невозможно.",
@@ -72,84 +79,132 @@ public class ProsmotrDisciplinPageTest extends Helper{
         go_home();
     }
 
-    @Test
-    public void check_first_page(){
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/structure");
-        // страница просмотра . семестр 9й (2018 год весна) первая строчка
-        /*if(!IsElementVisible(By.className("Warning"))){
-            Assert.fail("Страница не загрузилась/нет предупрежедния/это не страница просмотра ");
-        }
-        String warning=driver.findElement(By.className("Warning")).getText();
-        Assert.assertEquals(warning,"Был добавлен балл. Редактирование базовых настроек, модулей и групп невозможно.",
-                "Не соответсвует текст предупреждения");*/
-        go_home();
-    }
-
-    @Test
-    public void click_to_base_settings() {
-
-    }
-
-    @Test
-    public void click_to_modukes() {
-
-    }
-
+    /**
+     * Тест-кейс:
+     * 1. Перейти на страницу
+     * 2. Кликнуть таб преподователи
+     *
+     * Ожидается: загрузилась страница преподователей
+     */
     @Test
     public void click_to_teachers() {
+        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/structure");
+        // страница просмотра . семестр 9й (2018 год весна) первая строчка
+        if(!IsElementVisible(By.className("Warning"))){
+            Assert.fail("Страница не загрузилась/нет предупрежедния/это не страница просмотра ");
+        }
+        List<WebElement> tabs = driver.findElements(By.className("tab"));
+        if(tabs.get(2).isDisplayed())
+            Assert.assertEquals(tabs.get(2).getText(),"3. Преподаватели",
+                    "Третья кнопка таба - не преподователи");
+        else
+            Assert.fail("Не доступна кнопка преподователи");
+        tabs.get(2).click();
 
-    }
-
-    @Test
-    public void click_to_groups() {
-
-    }
-
-    @Test
-    public void click_to_students() {
-
-    }
-
-    @Test
-    public void click_to_go_perehod_k_ochenk() {
-
-    }
-
-    @Test
-    public void base_settings_is_nedostupn(){
-
+        List<WebElement> titles = driver.findElements(By.className("BlueTitle"));
+        Assert.assertEquals(titles.get(0).getText(),"Прикрепленные преподаватели",
+                "Не загрузилась страница/нет первого тэга h2");
+        go_home();
     }
 
     @Test
     public void give_leads_to_another_teacher(){
 
+        //а надо ли...?
     }
 
+
+    /**
+     *Тест-кейс:
+     * 1. Переходим на страницу
+     * 2. Вводим в поиск имя преподователя
+     * 3. Ищем конкретного преподователя в результатх поиска
+     * 4. Нажимаем присоединить
+     * 5. В Прикрепленных преподователях ищем этого преподователя
+     * 6. нажимаем отсоединить
+     *
+     * Ожидание: Преподователь нашелся. Преподователб прикрепился. преподователь открепился.
+     */
     @Test
-    public void search_teachers_another(){
+    public void add_and_delete_teacher() throws InterruptedException {
+        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/teachers");
+        if(!IsElementVisible(By.className("Warning"))){
+            Assert.fail("Страница не загрузилась/нет предупрежедния/это не страница просмотра ");
+        }
+
+        driver.findElement(By.cssSelector(".InputTeacherName.defaultForm.FLeft.P1Width")).sendKeys("Роман");
+        TimeUnit.SECONDS.sleep(2);
+        List<WebElement> teachers = driver.findElement(By.className("SearchTeachers")).findElements(By.className("Teacher"));
+        for(WebElement teach : teachers) {
+            if (teach.findElement(By.className("Name")).getText().equals("Штейнберг Роман Борисович")) {
+                if (!teach.findElement(By.cssSelector(".Action.Action_BindTeacher")).isDisplayed())
+                    Assert.fail("Не доступна кнопка присоединения преподователя");
+                WebElement first_part = driver.findElement(By.className("BindTeachersList"));
+
+                List<WebElement> prikrepl_teach = first_part.findElements(By.className("Teacher"));
+                teach.findElement(By.cssSelector(".Action.Action_BindTeacher")).click();
+                TimeUnit.SECONDS.sleep(1);
+                List<WebElement> prikrepl_teach_now = first_part.findElements(By.className("Teacher"));
+//вставить отсоединение
+
+                Assert.assertEquals(prikrepl_teach_now.size(), prikrepl_teach.size() + 1,
+                        "Преподователь не прикрепился");
+
+                Assert.assertEquals(prikrepl_teach_now.get(prikrepl_teach_now.size() - 1).findElement(By.className("Name")).getText(),
+                        "Штейнберг Роман Борисович", "Прикрепился не тот преподователь");
+
+                if(!prikrepl_teach_now.get(prikrepl_teach_now.size() - 1).findElement(By.cssSelector(".Action_UnbindTeacher.Action")).isDisplayed())
+                    Assert.fail("Не видно кнопки отсоединить");
+                prikrepl_teach_now.get(prikrepl_teach_now.size() - 1).findElement(By.cssSelector(".Action_UnbindTeacher.Action")).click();
+
+                driver.navigate().refresh();
+                List<WebElement> teach_afret_delete=driver.findElement(By.className("BindTeachersList")).findElements(By.className("Teacher"));
+                for (WebElement teach1 :teach_afret_delete){
+                    if (teach1.findElement(By.className("Name")).getText().equals("Штейнберг Роман Борисович"))
+                        Assert.fail("Преподователь не открепился");
+                }
+                Assert.assertEquals(teach_afret_delete.size(),prikrepl_teach_now.size()-1,
+                        "Количество преподователей не верно");
+                go_home();
+                return;
+            }
+        }
+        go_home();
+        Assert.fail("Не нашли искомого преподователя: Штейнберг Роман Борисович ");
+
 
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Переходим на страницу
+     * 2. Вводим в поиск уже прикрепленного преподователя
+     * Можно его читать, но для этой дисциплины прикреплен Лошкарев
+     *
+     * Ожидается: результат поиска пустой, есть тескствое предупреждение
+     * @throws InterruptedException
+     */
     @Test
-    public void search_teacher_and_add(){
+    public void search_teacher_yet_in_aded() throws InterruptedException {
+        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/teachers");
+        if(!IsElementVisible(By.className("Warning"))){
+            Assert.fail("Страница не загрузилась/нет предупрежедния/это не страница просмотра ");
+        }
 
+        driver.findElement(By.cssSelector(".InputTeacherName.defaultForm.FLeft.P1Width")).sendKeys("Лошкарёв Илья Витальевич");
+        TimeUnit.SECONDS.sleep(2);
+
+        if(!IsElementVisible(By.className("notification"))){
+            Assert.fail("Нет предупреждения о пустом поиске");
+        }
+        Assert.assertEquals(driver.findElement(By.className("notification")).getText(),
+                "Нет результатов... Возможно, преподаватели, соответствующие критериям поиска, уже прикреплены.",
+                "Не сответсвует текст предупреждения");
+        if(IsElementExists(By.cssSelector(".Action.Action_BindTeacher"))){
+            //ищем кнопку прикрепить, она есть только у результата поиска,
+            // можно искать а сами строки, но тоада надо ловить исключение
+            Assert.fail("Есть результат поиска, он дожен быть пустой");
+        }
     }
 
-    @Test
-    public void search_teacher_and_delete(){
-
-    }
-
-    @Test
-    public void search_teacher_whom_yet_added(){
-
-    }
-
-    @Test
-    public void search_teacher_leaders(){
-
-    }
-
-//открыть закрыть список студентов -??
-    //перестановка модулей в редактировании !! + добавление и удаление
 }
