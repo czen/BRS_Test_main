@@ -1,7 +1,0 @@
-<map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
-<area shape="rect" id="node1" href="$classufy_1_1mmcs_1_1brs_1_1_regressions_test_1_1_helpers.html" title="Родительский класс для всех классов пакета." alt="" coords="5,108,204,152"/>
-<area shape="rect" id="node2" href="$classufy_1_1mmcs_1_1brs_1_1_regressions_test_1_1_for_dekanat_accaunt.html" title="Переход по ссылкам на студенческом аккаунте" alt="" coords="252,5,451,49"/>
-<area shape="rect" id="node3" href="$classufy_1_1mmcs_1_1brs_1_1_regressions_test_1_1_for_student_accaunt.html" title="Переход по ссылкам на студенческом аккаунте" alt="" coords="252,73,451,117"/>
-<area shape="rect" id="node4" href="$classufy_1_1mmcs_1_1brs_1_1_regressions_test_1_1_for_teacher_accaunt.html" title="Переход по ссылкам на преподовательском аккаунте" alt="" coords="252,141,451,185"/>
-<area shape="rect" id="node5" href="$classufy_1_1mmcs_1_1brs_1_1_regressions_test_1_1_simple_tests.html" title="Переход по ссылкам без авторизации" alt="" coords="252,209,451,253"/>
-</map>

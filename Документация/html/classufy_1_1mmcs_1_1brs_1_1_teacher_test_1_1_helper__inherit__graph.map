@@ -1,7 +1,0 @@
-<map id="ufy.mmcs.brs.TeacherTest.Helper" name="ufy.mmcs.brs.TeacherTest.Helper">
-<area shape="rect" id="node1" title="Родительский класс для всех классов пакета." alt="" coords="5,108,208,152"/>
-<area shape="rect" id="node2" href="$classufy_1_1mmcs_1_1brs_1_1_teacher_test_1_1_after_click_btns_test.html" title=" " alt="" coords="256,5,459,49"/>
-<area shape="rect" id="node3" href="$classufy_1_1mmcs_1_1brs_1_1_teacher_test_1_1_marks_for_semestr_page_test.html" title=" " alt="" coords="256,73,459,117"/>
-<area shape="rect" id="node4" href="$classufy_1_1mmcs_1_1brs_1_1_teacher_test_1_1_marks_for_sessia_page_test.html" title=" " alt="" coords="256,141,459,185"/>
-<area shape="rect" id="node5" href="$classufy_1_1mmcs_1_1brs_1_1_teacher_test_1_1_teacher_test.html" title="Тесты на нажатие на кнопок в таблице" alt="" coords="256,209,459,253"/>
-</map>
