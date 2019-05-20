@@ -18,10 +18,13 @@ Selenium + Java + TestNG + Doxygen + Maven
 |	|			| FooterLinks		| неавторизированного пользователя
 |------	|-----------------------|-----------------------|------------------------------------|
 |	| StudentPageTest	| 	PageOfDisciplin		| Кнопки на странице дисциплины у студента |
-| | TeacherTest | TacherTest | Тесты для учительского аккаунта на кнопки и на оценки |
-| | | SemestrPageTest |
-| | | SessiaPageTest |
-| | | RedactirDisciplinTest |
+| | TeacherTest | TeacherTest | Тесты для преподовательского аккаунта на кнопки и оценки |
+| | | AfterClickBtnsTest |
+| | | EditDisciplinPageTest |
+| | | MarksForSemestrPageTest |
+| | | MarksForSessiaPageTest |
+| | | MarksOfZachetPageTest |
+| | | ProsmotrDisciplinPageTest |
 
 
 
@@ -33,8 +36,8 @@ Selenium + Java + TestNG + Doxygen + Maven
 ----------------
 Для создания документации использовался Doxygen.
 
-Документация к проекту находится в папке "Документация". Она есть в формает html и pdf.
-Для просмотра найти и запустить index.html
+Документация к проекту находится в папке "Документация". Формат - html.
+Для просмотра зайти в папку и открыть index.html - ярлык в папке
 
 Установка
 --------------
@@ -79,5 +82,12 @@ https://qa-help.ru/questions/kak-zapustit-testng-iz-komandnoj-stroki
 
 Для изменения документации doxygen <config file> или через программу Doxywizard. но не забыть проверить пути к программам (например, к graphviz)
 
+Если проект не собирается, то закоментировать или раскоментировать строчки в pom.xml:
+
+ <source>10.0.2</source>
+ 
+ <target>10.0.2</target>
+
+ 
 P.S. Часть тестов уже была написана Ангелиной и находится здесь 
 http://gitlab.mmcs.sfedu.ru:82/it-lab/gradeUItests/blob/master/UnitTestProject1/
