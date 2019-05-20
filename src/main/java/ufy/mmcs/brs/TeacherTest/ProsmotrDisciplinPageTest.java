@@ -12,11 +12,11 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *\brief Тесты страниц просмотра дисциплины
- * @warning Если падает тест передачи дисциплины - зайти под rs/22222  и вручную передать дисциплину на
- * Яну Демьяненко. CS332. Компьютерная графика. 2018 год весна.
+
+ * Тестирует поиск, добавление и удаление преподователей.
  *  @version 1.0
  *  @author Stepanova
- *  @see AfterClickBtnsTest, Helper, MarksForSessiaPageTest, TeacherTest, MarksForSemestrPageTest
+ *  @see AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, TeacherTest, MarksOfZachetPageTest, EditDisciplinPageTest, AfterClickBtnsTest, Helper
  */
 public class ProsmotrDisciplinPageTest extends Helper{
     /** \brief Инициализация
@@ -24,7 +24,7 @@ public class ProsmotrDisciplinPageTest extends Helper{
      * Этот метод вызывается перед выполнением всех функций этого класса
      *
      * Инициализация драйвера браузера. Установка неявных ожиданий. Авторизация под аккаунтом dem\22222
-     * @see Helper:timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, terarDown
+     * @see Helper:timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
      * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
      */
     @Parameters("browser")
@@ -115,7 +115,7 @@ public class ProsmotrDisciplinPageTest extends Helper{
 
 
     /**
-     *Тест-кейс:
+     * Тест-кейс:
      * 1. Переходим на страницу
      * 2. Вводим в поиск имя преподователя
      * 3. Ищем конкретного преподователя в результатх поиска

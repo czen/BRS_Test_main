@@ -18,13 +18,14 @@ import java.util.List;
  *
  * К сожалению, некоторые тесты могут падать просто так.
  * Надо их перезапустить. если не поможет, то запустить конкретный тест и разбираться.
+ * @see AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, MarksOfZachetPageTest, ProsmotrDisciplinPageTest, EditDisciplinPageTest, AfterClickBtnsTest, Helper
  */
 public class TeacherTest extends Helper {
     /** \brief Инициализация
      *
-     * Инициализация драйвера браузера. Установка неявных ожиданий. Атоизация под аккаунтом dem\22222
-     * @see ufy.mmcs.brs.AuthorizationTest.Helper ::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, terarDown
-     * @param browser
+     * Инициализация драйвера браузера. Установка неявных ожиданий. Автоизация под аккаунтом dem\22222
+     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
      */
     @Parameters("browser")
     @BeforeClass
@@ -42,8 +43,13 @@ public class TeacherTest extends Helper {
         authorization();
     }
 
-    /**
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
      * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
      */
     @AfterClass
     public void tearDown() {
@@ -94,7 +100,7 @@ public class TeacherTest extends Helper {
      * Тест-кейс:
      * 1. Открыть страницу
      * 2. Авторизироваться
-     * 3. Нажать на кнопку Семестр (нажимается на второй строке таблицы, истоически)
+     * 3. Нажать на кнопку Семестр (нажимается на второй строке таблицы, исторически)
      *
      * Ожидается:
      * Загрузилась страница выставления баллов
@@ -124,7 +130,7 @@ public class TeacherTest extends Helper {
      * Тест-кейс:
      * 1. Открыть страницу
      * 2. Авторизироваться
-     * 3. Нажать на кнопку Семестр (нажимается на второй строке таблицы, истоически)
+     * 3. Нажать на кнопку Семестр (нажимается на второй строке таблицы, исторически)
      *
      * Ожидается:
      * Загрузилась страница выставления баллов
@@ -148,6 +154,15 @@ public class TeacherTest extends Helper {
                 "Загрузилась не та страница ");
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Открыть страницу
+     * 2. Авторизоваться
+     * 3. Перейти на другой семест
+     * 4. Нажать кнопку Сессия для экзамена
+     *
+     * Ожидается: Загрузилась страница сессии
+     */
     @Test
     public void click_button_sessia_near_exam() {
         go_home();
@@ -167,6 +182,15 @@ public class TeacherTest extends Helper {
                 "Загрузилась не та страница ");
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Открыть страницу
+     * 2. Авторизоваться
+     * 3. Перейти на другой семест
+     * 4. Нажать кнопку Сессия для зачета
+     *
+     * Ожидается: Загрузилась страница сессии
+     */
     @Test
     public void click_button_sessia_near_zach() {
         go_home();
@@ -186,7 +210,13 @@ public class TeacherTest extends Helper {
     }
 
     /**
-     * Проверка что дисциплина это экзамен (извесная дисциплина)
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизоваться
+     * 3. Сменить семестр
+     * 4. Для извесной дисциплины проверить тип дисциплины (экзамен)
+     *
+     * Ожидается: Тип совпадает с ожидаемым
      */
     @Test
     public void exam_is_exam(){
@@ -200,7 +230,13 @@ public class TeacherTest extends Helper {
     }
 
     /**
-     * Проверка что дисциплина это зачет (извесная дисциплина)
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизоваться
+     * 3. Сменить семестр
+     * 4. Для извесной дисциплины проверить тип дисциплины (зачет)
+     *
+     * Ожидается: Тип совпадает с ожидаемым
      */
     @Test
     public void zach_is_zach(){
@@ -213,6 +249,14 @@ public class TeacherTest extends Helper {
         Assert.assertEquals(now_znach,"Зачет","Не соответсвует тип дисциплины ");
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизироваться
+     * 3. Прочитать название первой кнопки
+     *
+     * Ожидается: Название = Семестр
+     */
     @Test
     public void name_of_btn_sem(){
         go_home();
@@ -228,6 +272,14 @@ public class TeacherTest extends Helper {
         Assert.assertEquals(btn_sem.getText(),"Семестр","Не соответсвует название кнопки ");
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизироваться
+     * 3. Прочитать название второй кнопки
+     *
+     * Ожидается: Название = Сессия
+     */
     @Test
     public void name_of_btn_sessia(){
         go_home();
@@ -243,6 +295,14 @@ public class TeacherTest extends Helper {
         Assert.assertEquals(btn_sem.getText(),"Сессия","Не соответсвует название кнопки ");
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизироваться
+     * 3. Прочитать название третьей кнопки
+     *
+     * Ожидается: Название = Журнал
+     */
     @Test
     public void name_of_btn_journal(){
         go_home();
@@ -258,6 +318,14 @@ public class TeacherTest extends Helper {
         Assert.assertEquals(btn_sem.getText(),"Журнал","Не соответсвует название кнопки ");
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизироваться
+     * 3. Прочитать название последней кнопки
+     *
+     * Ожидается: Название = Просмотр или Редактирование
+     */
     @Test
     public void name_of_btn_prosmotr(){
         go_home();
@@ -285,6 +353,14 @@ public class TeacherTest extends Helper {
         //Assert.assertEquals(btn_sem.getText(),"Журнал","Не соответсвует название кнопки ");
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизироваться
+     * 3. Нажать кнопку Журнал
+     *
+     * Ожидается: Загрузился журнал дисциплины
+     */
     @Test
     public void click_button_journal_near_zach() {
         go_home();
@@ -295,7 +371,7 @@ public class TeacherTest extends Helper {
         btn_sem.click();
         if(!IsElementVisible(By.className("subject"))) {
             choose_semestr("S-"+last_semestr());
-            Assert.fail("Не загрузилась страница после нажатия на кнопку Семестр");
+            Assert.fail("Не загрузилась страница после нажатия на кнопку Журнал");
         }
         String s=driver.findElement(By.className("subject")).getText();
         choose_semestr("S-"+last_semestr());
@@ -303,6 +379,14 @@ public class TeacherTest extends Helper {
                 "Загрузилась не та страница ");
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизироваться
+     * 3. Нажать кнопку Журнал
+     *
+     * Ожидается: Загрузился журнал дисциплины
+     */
     @Test
     public void click_button_journal_near_exam() {
         go_home();
@@ -321,7 +405,7 @@ public class TeacherTest extends Helper {
         btn_sem.click();
         if(!IsElementVisible(By.className("subject"))) {
             choose_semestr("S-"+last_semestr());
-            Assert.fail("Не загрузилась страница после нажатия на кнопку Семестр");
+            Assert.fail("Не загрузилась страница после нажатия на кнопку Журнал");
         }
         String s=driver.findElement(By.className("subject")).getText();
         choose_semestr("S-"+last_semestr());
@@ -329,6 +413,15 @@ public class TeacherTest extends Helper {
                 "Загрузилась не та страница ");
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизироваться
+     * 3. Сменить семестр
+     * 4. Нажать кнопку Просмотр
+     *
+     * Ожидается: Загрузилась страница модулей дисциплины
+     */
     @Test
     public void click_button_prosmotr_near_exam() {
         go_home();
@@ -357,9 +450,14 @@ public class TeacherTest extends Helper {
     }
 
     /**
-     * \brief Нажатие на Редактирование
+     * Тест-кейс:
+     * 1. Зайти на страницу
+     * 2. Авторизироваться
+     * 3. Нажать кнопку Редактирование
      *
-     * Может падать из-за отсутсвия в таблице кнопки Редактирование, такая кнопка возможно только на последнем семестре.
+     * Ожидается: Загрузилась страница редактирования дисциплины
+     *
+     * @warning Может падать из-за отсутсвия в таблице кнопки Редактирование, такая кнопка возможно только на последнем семестре.
      * @see Helper::btn_is_radactirovania, Helper::get_btn_redactir
      */
     @Test

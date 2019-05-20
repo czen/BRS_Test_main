@@ -10,12 +10,17 @@ import org.testng.annotations.*;
 
 import java.util.List;
 
+/**\brief Тесты после нажатия на кнопки в таблице
+ *  @version 1.0
+ *  @author Stepanova
+ * @see AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, TeacherTest, MarksOfZachetPageTest, ProsmotrDisciplinPageTest, EditDisciplinPageTest, Helper
+ */
 public class AfterClickBtnsTest extends Helper {
     /** \brief Инициализация
      *
-     * Инициализация драйвера браузера. Установка неявных ожиданий. Атоизация под аккаунтом dem\22222
-     * @see ufy.mmcs.brs.AuthorizationTest.Helper ::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, terarDown
-     * @param browser
+     * Инициализация драйвера браузера. Установка неявных ожиданий. Автоизация под аккаунтом dem\22222
+     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
      */
     @Parameters("browser")
     @BeforeClass
@@ -33,8 +38,13 @@ public class AfterClickBtnsTest extends Helper {
         authorization();
     }
 
-    /**
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
      * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
      */
     @AfterClass
     public void tearDown() {
@@ -44,6 +54,14 @@ public class AfterClickBtnsTest extends Helper {
             driver=null;}
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Загрузить страницу
+     * 2. Нажать Семестр
+     * 3. Прочитать табы
+     *
+     * Ожидается: Название и порядок табов = Сессия, История, Журнал
+     */
     @Test
     public void semestr_page_tabs() {
         go_home();
@@ -170,6 +188,14 @@ public class AfterClickBtnsTest extends Helper {
         go_home();
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Загрузить страницу
+     * 2. Нажать Сессия
+     * 3. Прочитать табы
+     *
+     * Ожидается: Название и порядок табов = Семестр, История, Журнал
+     */
     @Test
     public void sessia_page_tabs() {
         go_home();
@@ -191,6 +217,14 @@ public class AfterClickBtnsTest extends Helper {
         go_home();
     }
 
+    /**
+     * Тест-кейс:
+     * 1. Загрузить страницу
+     * 2. Нажать Журнал
+     * 3. Прочитать табы
+     *
+     * Ожидается: Название и порядок табов = Семестр, Сессия, История
+     */
     @Test
     public void journal_page_tabs() {
         go_home();

@@ -16,18 +16,21 @@ import java.util.concurrent.TimeUnit;
 /**
  * \brief Тесты страницы сессии для экзамена.
  * @warning Если тесты падают, следует зайти на страницу и вручную убрать все оценки с первой строки. Иначе все и так упадет.
- *  @version 1.0
+ * @warning Если тесты падают на удалении элементов - зайти на траницу и
+ * вручную удалить все оценки из первых двух строчек (они были пустые) селектор - все группы.
+ * @warning Первая строка страницы должна быть пустой изначально. чтобы тесты прошли
+ * @version 1.0
  *  @author Stepanova
- *  @see  Helper, MarksForSessiaPageTest, MarksForSemestrPageTest, MarksOfZachetPageTest
+ *  @see  AfterClickBtnsTest, MarksForSemestrPageTest, TeacherTest, MarksOfZachetPageTest, ProsmotrDisciplinPageTest, EditDisciplinPageTest, AfterClickBtnsTest, Helper
  */
 public class MarksForSessiaPageTest extends Helper {
     /**
      * \brief Инициализация
      * <p>
-     * Инициализация драйвера браузера. Установка неявных ожиданий. Атоизация под аккаунтом dem\22222
+     * Инициализация драйвера браузера. Установка неявных ожиданий. Автоизация под аккаунтом dem\22222
      *
-     * @param browser
-     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, terarDown
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
+     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
      */
     @Parameters("browser")
     @BeforeClass
@@ -45,8 +48,13 @@ public class MarksForSessiaPageTest extends Helper {
         authorization();
     }
 
-    /**
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
      * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
      */
     @AfterClass
     public void tearDown() {
@@ -220,7 +228,7 @@ public class MarksForSessiaPageTest extends Helper {
     }
 
     /**
-     * Тес-кейс:
+     * Тест-кейс:
      * 1. Зайти на страницу
      * 2. Выставить оценку
      * 3. Изменить оценку

@@ -12,19 +12,21 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**\brief Тест страницы сессии для зачета
- * @warning Если тесты падают, зайти на страницу и удалить оценки в первой строчке
+ * @warning Если тесты падают на удалении элементов - зайти на траницу и
+ * вручную удалить все оценки из первых двух строчек (они были пустые) селектор - все группы.
+ * @warning Первая строка страницы должна быть пустой изначально. чтобы тесты прошли
  * @version 1.0
  * @author Stepanova
- *  @see  Helper, MarksForSessiaPageTest, MarksForSemestrPageTest, MarksForSessiaPageTest
+ *  @see  AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, TeacherTest, ProsmotrDisciplinPageTest, EditDisciplinPageTest, AfterClickBtnsTest, Helper
  */
 public class MarksOfZachetPageTest extends Helper {
     /**
      * \brief Инициализация
      * <p>
-     * Инициализация драйвера браузера. Установка неявных ожиданий. Атоизация под аккаунтом dem\22222
+     * Инициализация драйвера браузера. Установка неявных ожиданий. Автоизация под аккаунтом dem\22222
      *
      * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
-     *  @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, terarDown
+     *  @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
      */
     @Parameters("browser")
     @BeforeClass
@@ -42,8 +44,13 @@ public class MarksOfZachetPageTest extends Helper {
         authorization();
     }
 
-    /**
+    /** \brief Завершение работы
+     *
+     * Runs this method after all the test methods in the current class have been run.
      * Close all browser windows and safely end the session
+     *
+     * Закрытие браузера
+     * @see getDriver
      */
     @AfterClass
     public void tearDown() {

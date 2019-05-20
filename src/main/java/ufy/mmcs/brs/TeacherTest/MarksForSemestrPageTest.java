@@ -15,10 +15,10 @@ import java.util.concurrent.TimeUnit;
  * Используется страница http://testgrade.sfedu.ru/discipline/3723/rate
  * @warning Если тесты падают на удалении элементов - зайти на траницу и
  * вручную удалить все оценки из первых двух строчек (они были пустые) селектор - все группы.
- * @warning Первая строка страницы должна быть пустой изначально. чтобы тесты прощли
+ * @warning Первая строка страницы должна быть пустой изначально. чтобы тесты прошли
  *  @version 1.0
  *  @author Stepanova
- *  @see AfterClickBtnsTest, Helper, MarksForSessiaPageTest, TeacherTest
+ *  @see AfterClickBtnsTest, MarksForSessiaPageTest, TeacherTest, MarksOfZachetPageTest, ProsmotrDisciplinPageTest, EditDisciplinPageTest, AfterClickBtnsTest, Helper
  */
 public class MarksForSemestrPageTest extends Helper {
     /** \brief Инициализация
@@ -26,7 +26,7 @@ public class MarksForSemestrPageTest extends Helper {
      * Этот метод вызывается перед выполнением всех функций этого класса
      *
      * Инициализация драйвера браузера. Установка неявных ожиданий. Авторизация под аккаунтом dem\22222
-     * @see Helper:timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, terarDown
+     * @see Helper:timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
      * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
      */
     @Parameters("browser")
@@ -495,7 +495,7 @@ public class MarksForSemestrPageTest extends Helper {
      * 2. сравнить с Итогом за семестр
      * 3. Добавить бонусы и экзамен
      * 4. Сравнить с Итогом
-     * @warnings Если сумма балов больше 100 тест будет падать. Выставляется ведь "100+"
+     * @warning Если сумма балов больше 100 тест будет падать. Выставляется ведь "100+"
      * @throws InterruptedException
      */
     @Test

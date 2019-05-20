@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @todo  Разнести по разным тестам кейс отмены удаления и удаление
  *  @version 1.0
  *  @author Stepanova
- *  @see AfterClickBtnsTest, Helper, MarksForSessiaPageTest, TeacherTest, MarksForSemestrPageTest
+ *  @see AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, TeacherTest, MarksOfZachetPageTest, ProsmotrDisciplinPageTest, AfterClickBtnsTest, Helper
  */
 public class EditDisciplinPageTest extends Helper {
     private String url="";
@@ -178,7 +178,7 @@ public class EditDisciplinPageTest extends Helper {
 
     }
 
-    /**\brief Удаляет модуль снизу
+    /**\brief Удаляет последний модуль
      *
      * Чтобы не писать каждый раз этот код, вынесли отдельно
      * @throws InterruptedException от ожидания
@@ -202,6 +202,7 @@ public class EditDisciplinPageTest extends Helper {
     //вставить где падает - удаление модуля
 
     /**
+     * Тест-кейс:
      * 1. Создать модуль
      * 2. Нажать для этого модуля создать подмодуль
      *
