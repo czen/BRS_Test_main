@@ -5,17 +5,17 @@
     <test name="ChromeTest">
         <parameter name="browser" value="chrome"/>
         <packages>
-            <package name="ufy.mmcs.brs.StudentPageTest.*"/>
-			<package name="ufy.mmcs.brs.AuthorizationTest.*"/>
-			<package name="ufy.mmcs.brs.RegressionsTest.*"/>
-			<package name="ufy.mmcs.brs.TeacherTest.*"/>
-			<package name="ufy.mmcs.brs.UnauthorizedPageTest.*"/>
+            <package name="ru.sfedu.grade.StudentPageTest.*"/>
+			<package name="ru.sfedu.grade.AuthorizationTest.*"/>
+			<package name="ru.sfedu.grade.RegressionsTest.*"/>
+			<package name="ru.sfedu.grade.TeacherTest.*"/>
+			<package name="ru.sfedu.grade.UnauthorizedPageTest.*"/>
         </packages>
     </test>
     <test name="FirefoxTest">
         <parameter name="browser" value="firefox"/>
         <packages>
-            <package name="ufy.mmcs.brs.StudentPageTest.*"/>
+            <package name="ru.sfedu.grade.StudentPageTest.*"/>
         </packages>
     </test>
 </suite>
