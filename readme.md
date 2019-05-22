@@ -45,6 +45,8 @@ Selenium + Java + TestNG + Doxygen + Maven
 
 * https://www.java.com/en/download/
 
+* http://www.oracle.com/technetwork/java/javase/downloads/index.html
+
 * https://www.seleniumhq.org/download/
 
 Создать переменную окружения JAVA_HOME=C:\Program Files\Java\jdk-10.0.2
