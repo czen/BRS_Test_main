@@ -30,13 +30,16 @@ public class AuthorizationFormTest extends Helper{
     @Parameters("browser")
     @BeforeClass// @BeforeTest
     public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
-        if (browser.equals("chrome")) {
+  /*      if (browser.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", get_chrome_driver());
             driver = new ChromeDriver();
         } else if (browser.equals("firefox")) {
             System.setProperty("webdriver.gecko.driver", get_firefox_driver());
             driver = new FirefoxDriver();
-        }
+        }*/
+        read_propities();
+
+        initialization_driver(browser);
         timeouts_set();
     }
 

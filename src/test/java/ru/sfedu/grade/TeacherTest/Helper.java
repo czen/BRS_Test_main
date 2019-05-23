@@ -746,7 +746,7 @@ public class Helper {
 	/// Значение в секундах устанавливаемых ожиданий @see timeouts_set
 	private static final long DEFAULT_TIMEOUT = 10;//300;
 	/// Путь к файлу конфигурации @see get_chrome_driver
-	static private String config_path=".\\config.ini";
+	static private String config_path="config.ini";
 	/** \brief Флаг, определющий место чтения пути к конфигурационному файлу
 	 *
 	 * Если значение = true, то путь читается из системной переменной Driver_Path

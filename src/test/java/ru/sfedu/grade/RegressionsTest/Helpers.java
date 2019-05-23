@@ -39,7 +39,7 @@ public class Helpers {
     /// Веб-драйвер
     protected WebDriver driver;
     /// Путь к файлу конфигурации @see get_chrome_driver
-    static private String config_path=".\\config.ini";
+    static private String config_path="config.ini";
     /** \brief Флаг, определющий место чтения пути к конфигурационному файлу
      *
      * Если значение = true, то путь читается из системной переменной Driver_Path
