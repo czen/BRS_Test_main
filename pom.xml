@@ -54,8 +54,8 @@
           <version>3.7.0</version>
           <configuration>
             <!-- specify current java version here: -->
-           <source>10</source>
-            <target>10</target>
+          <!-- <source>10</source>
+            <target>10</target> -->
             <!-- or edit these in your properties -->
           </configuration>
         </plugin>

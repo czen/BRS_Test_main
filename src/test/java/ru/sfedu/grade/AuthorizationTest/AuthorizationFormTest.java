@@ -19,26 +19,19 @@ import org.testng.annotations.*;
  * @see AuthorizationTest, Helper
  */
 public class AuthorizationFormTest extends Helper{
-    /**\brief Инициализация
+    /** \brief Чтение конфиг файла. Инициализация драайвера. Установка ожиданий.
      *
-     * Runs this method before the first test method in the current class is invoked.
-     * Инициализация драйвера и установка ожиданий. По-умолчанию используется браузер хром.
+     * Этот метод вызывается перед выполнением всех функций этого класса, т.е. тестов.
      *
-     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
-     * @see tearDown, Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver
+     *  По-умолчанию используется браузер хром. Xml файлом можно настраивать запуск в разных браузерах
+     *  (следует тогда запускать именно его, а не класс или проект)
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию =  chrome
+     * @see tearDown, Helper::timeouts_set, Helper::read_propities, Helper::initialization_driver
      */
     @Parameters("browser")
     @BeforeClass// @BeforeTest
     public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
-  /*      if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
-            driver = new ChromeDriver();
-        } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
-            driver = new FirefoxDriver();
-        }*/
         read_propities();
-
         initialization_driver(browser);
         timeouts_set();
     }
