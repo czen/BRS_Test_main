@@ -4,24 +4,24 @@ Selenium + Java + TestNG + Doxygen + Maven
 Структура проекта:
 --------------------------
 
-	 Пакет			| Класс			| Описание
------------------------|-----------------------|--------------------------------------|
- RegressionsTest	| SimpleTest		| Переход по заранее заданным ссылкам
-			| StudentAccTest	| и проверка существования этих страниц
-	|			| TeacherAccTest	|
-	|			| DekanatAccTest	|
-	| AuthorizationTest	| AuthorizationFormTest	| Тесты авторизации
+	 Пакет	| Класс			| Описание
+-----------------------|----------------------|-------------------------|
+RegressionsTest	| SimpleTest		| Переход по заранее заданным ссылкам |
+			| StudentAccTest	| и проверка существования этих страниц|
+	|			| TeacherAccTest	||
+	|			| DekanatAccTest	||
+	| AuthorizationTest	| AuthorizationFormTest	| Тесты авторизации|
 	|			| AuthorizationTest	||
-	| UnauthorizedPageTest	| TabsTest		| Тесты элементов на странице для
-|			| FooterLinks		| неавторизированного пользователя
+	| UnauthorizedPageTest	| TabsTest		| Тесты элементов на странице для|
+|			| FooterLinks		| неавторизированного пользователя|
 	| StudentPageTest	| 	PageOfDisciplin		| Кнопки на странице дисциплины у студента |
   TeacherTest | TeacherTest | Тесты для преподовательского аккаунта на кнопки и оценки |
-  | AfterClickBtnsTest |
-  | EditDisciplinPageTest |
- | MarksForSemestrPageTest |
-  | MarksForSessiaPageTest |
-  | MarksOfZachetPageTest |
-  | ProsmotrDisciplinPageTest |
+  | AfterClickBtnsTest ||
+  | EditDisciplinPageTest ||
+ | MarksForSemestrPageTest ||
+  | MarksForSessiaPageTest ||
+  | MarksOfZachetPageTest ||
+  | ProsmotrDisciplinPageTest ||
 
 
 
