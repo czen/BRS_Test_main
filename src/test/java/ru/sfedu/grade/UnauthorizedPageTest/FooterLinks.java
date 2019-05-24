@@ -78,17 +78,18 @@ public class FooterLinks extends Helper
         go_home();
         if_grade_visiable();
 
-        if(!IsElementVisible(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[2]")))
+        if(!IsElementVisible(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[3]")))
             Assert.fail("Нет элемента Забыли пароль");
         WebElement href=driver.findElement(By.xpath("//*[@id=\"GradeAuthDiv\"]/div[2]/a[3]"));
-        Assert.assertEquals(href.getText(),"Забыли пароль?","е соответсвет текст");
+        Assert.assertEquals(href.getText(),"Забыли пароль?","Не соответсвет текст");
         href.click();
         //Assert.assertTrue(IsElementVisible(By.id("remind")),"Не появилась кнопка Восстановить");
-        Assert.assertTrue(IsElementVisible(By.xpath("//*[@id=\"wrap\"]/div[2]/div[1]/div/div[1]/div[2]/a")),"Нет элемента перехода по сссылке домой");
+        Assert.assertTrue(IsElementVisible(By.xpath("//*[@id=\"wrap\"]/div[2]/div[1]/div/div[1]/div[2]/a")),
+                "Нет элемента перехода по сссылке домой");
         WebElement ref=driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[1]/div/div[1]/div[2]/a"));
         Assert.assertEquals(ref.getText(),"Я вспомнил! Просто дайте мне войти.","Не соответсвует текст");
         ref.click();
-        Assert.assertTrue(IsElementVisible(By.id("signin_b")),"Не появилась кнопка Восстановить");
+        Assert.assertTrue(IsElementVisible(By.id("signopenidin_b")),"Не появилась кнопка  OpenID.sfedu.ru");
     }
 
     /** Тест-кейс:
@@ -124,11 +125,12 @@ public class FooterLinks extends Helper
         // Assert.assertEquals(href.getText(),"Активировать аккаунт","Не соответсвет текст");
         href.click();
         //Assert.assertTrue(IsElementVisible(By.id("signup_b")),"Не появилась кнопка Восстановить");
-        Assert.assertTrue(IsElementVisible(By.xpath("//*[@id=\"wrap\"]/div[2]/div[1]/div/div[1]/div/a")),"Нет элемента перехода по сссылке домой");
+        Assert.assertTrue(IsElementVisible(By.xpath("//*[@id=\"wrap\"]/div[2]/div[1]/div/div[1]/div/a")),
+                "Нет элемента перехода по сссылке домой");
         WebElement ref=driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[1]/div/div[1]/div/a"));
         Assert.assertEquals(ref.getText(),"Войти в существующий аккаунт","Не соответсвует текст");
         ref.click();
-        Assert.assertTrue(IsElementVisible(By.id("signin_b")),"Не появилась кнопка Восстановить");
+        Assert.assertTrue(IsElementVisible(By.id("signopenidin_b")),"Не появилась кнопка Войти через OpenID.sfedu.ru");
     }
 
     /**
@@ -139,7 +141,7 @@ public class FooterLinks extends Helper
      */
     @Test
     public void activ_akk_inputs(){
-        driver.navigate().to("http://testgrade.sfedu.ru/sign/up");
+        driver.navigate().to(get_base_url()+"sign/up");
         String errors="";
         Boolean flag=false;
         if (!IsElementVisible(By.id("activation_code")))
@@ -193,7 +195,7 @@ public class FooterLinks extends Helper
      Ожидается: присутсвие всех инпутов и табов на странице*/
     @Test
     public void forgotten_pwd_inputs(){
-        driver.navigate().to("http://testgrade.sfedu.ru/remind");
+        driver.navigate().to(get_base_url()+"remind");
         String errors="";
         Boolean flag=false;
 
@@ -231,7 +233,7 @@ public class FooterLinks extends Helper
      */
     @Test
     public void forgotten_pwd_page_click_wrong_inputs() {
-        driver.navigate().to("http://testgrade.sfedu.ru/remind");
+        driver.navigate().to(get_base_url()+"remind");
         String errors = "";
         Boolean flag = false;
 
@@ -270,7 +272,7 @@ public class FooterLinks extends Helper
      */
     @Test
     public void forgotten_pwd_page_click_empty() {
-        driver.navigate().to("http://testgrade.sfedu.ru/remind");
+        driver.navigate().to(get_base_url()+"remind");
         String errors = "";
         Boolean flag = false;
 
@@ -309,7 +311,7 @@ public class FooterLinks extends Helper
      */
     @Test
     public void forgotten_pwd_page_click_wrong_email(){
-        driver.navigate().to("http://testgrade.sfedu.ru/remind");
+        driver.navigate().to(get_base_url()+"remind");
         String errors="";
         Boolean flag=false;
         String error_text;

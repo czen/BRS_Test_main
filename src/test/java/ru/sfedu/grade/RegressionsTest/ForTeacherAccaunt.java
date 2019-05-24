@@ -11,49 +11,47 @@ import org.testng.annotations.*;
  * @see Helpers, SimpleTests, ForStudentAccaunt, ForDekanatAccaunt
  */
 public class ForTeacherAccaunt extends Helpers{
-    private String url1="http://testgrade.sfedu.ru/";
-    private String url2="http://testgrade.sfedu.ru/discipline/13406/rate";
-    private String url3="http://testgrade.sfedu.ru/discipline/13406/exam";
-    private String url4="http://testgrade.sfedu.ru/discipline/13406/journal";
-    private String url5="http://testgrade.sfedu.ru/discipline/13406/structure";
-    private String url6="http://testgrade.sfedu.ru/discipline/13406/settings";
-    private String url7="http://testgrade.sfedu.ru/discipline/13406/teachers";
-    private String url8="http://testgrade.sfedu.ru/discipline/13406/groups";
-    private String url9="http://testgrade.sfedu.ru/discipline/13406/students";
-    private String url10="http://testgrade.sfedu.ru/office";
-    private String url11="http://testgrade.sfedu.ru/office/reports/bill";
-    private String url12="http://testgrade.sfedu.ru/discipline/3723/rate";
-    private String url13="http://testgrade.sfedu.ru/discipline/3723/exam";
-    private String url14="http://testgrade.sfedu.ru/discipline/3723/journal";
-    private String url15="http://testgrade.sfedu.ru/discipline/3723/structure";
-    private String url16="http://testgrade.sfedu.ru/discipline/3723/settings";
-    private String url17="http://testgrade.sfedu.ru/discipline/3723/teachers";
-    private String url18="http://testgrade.sfedu.ru/discipline/3723/groups";
-    private String url19="http://testgrade.sfedu.ru/discipline/3723/students";
-    private String url20="http://testgrade.sfedu.ru/discipline/3666/rate"; //zachet
-    private String url21="http://testgrade.sfedu.ru/discipline/3666/exam";
-    private String url22="http://testgrade.sfedu.ru/discipline/3666/structure";
-    private String url23="http://testgrade.sfedu.ru/discipline/3666/settings";
-    private String url24="http://testgrade.sfedu.ru/discipline/3666/teachers";
+    //Переместить их в инициализирующий метод и можно написать такие же тесты...
 
-    /** \brief Инициализация
+  /*  private String url1=get_base_url()+"";
+    private String url2=get_base_url()+"discipline/13406/rate";
+    private String url3=get_base_url()+"discipline/13406/exam";
+    private String url4=get_base_url()+"discipline/13406/journal";
+    private String url5=get_base_url()+"discipline/13406/structure";
+    private String url6=get_base_url()+"discipline/13406/settings";
+    private String url7=get_base_url()+"discipline/13406/teachers";
+    private String url8=get_base_url()+"discipline/13406/groups";
+    private String url9=get_base_url()+"discipline/13406/students";
+    private String url10=get_base_url()+"office";
+    private String url11=get_base_url()+"office/reports/bill";
+    private String url12=get_base_url()+"discipline/3723/rate";
+    private String url13=get_base_url()+"discipline/3723/exam";
+    private String url14=get_base_url()+"discipline/3723/journal";
+    private String url15=get_base_url()+"discipline/3723/structure";
+    private String url16=get_base_url()+"discipline/3723/settings";
+    private String url17=get_base_url()+"discipline/3723/teachers";
+    private String url18=get_base_url()+"discipline/3723/groups";
+    private String url19=get_base_url()+"discipline/3723/students";
+    private String url20=get_base_url()+"discipline/3666/rate"; //zachet
+    private String url21=get_base_url()+"discipline/3666/exam";
+    private String url22=get_base_url()+"discipline/3666/structure";
+    private String url23=get_base_url()+"discipline/3666/settings";
+    private String url24=get_base_url()+"discipline/3666/teachers";*/
+
+    /** \brief Чтение конфиг файла. Инициализация драайвера. Установка ожиданий.
      *
-     * Этот метод вызывается перед выполнением всех функций этого класса
+     * Этот метод вызывается перед выполнением всех функций этого класса, т.е. тестов.
      *
-     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий. Авторизация под dem/22222
-     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию - chrom
-     * @see Helpers::timeouts_set, Helpers::get_chrome_driver, Helpers::get_firefox_driver, tearDown
+     *  По-умолчанию используется браузер хром. Xml файлом можно настраивать запуск в разных браузерах
+     *  (следует тогда запускать именно его, а не класс или проект)
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию =  chrome
+     * @see Helpers::timeouts_set, Helper::read_propities, Helper::initialization_driver, tearDown
      */
     @Parameters("browser")
-    @BeforeClass// @BeforeTest
-    public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
-        if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
-            driver = new ChromeDriver();
-        } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
-            driver = new FirefoxDriver();
-        }
+    @BeforeClass
+    public void getDriver(@Optional("chrome") String browser) {
+        read_propities();
+        initialization_driver(browser);
         timeouts_set();
         go_home();
         authorization("teacher");

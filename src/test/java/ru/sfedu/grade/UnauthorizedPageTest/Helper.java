@@ -273,6 +273,21 @@ public class Helper {
     }
 
     /**
+     * \brief Выдает базовый веб адрес по которому тестируеься система
+     *
+     * @warning Если указан не тестовый сервер следует ввести все нужные пароли для аккаунтов
+     * @return URL адрес
+     */
+    public String get_base_url(){
+        if(BASE_URL.isEmpty())
+        {
+            System.out.println("Config url didn't read, used: http://testgrade.sfedu.ru/ BASE_URL="+BASE_URL);
+            return "http://testgrade.sfedu.ru/";
+        }
+        return BASE_URL;
+    }
+
+    /**
      * \brief Устанавливает значения ожиданий для драйвера
      * @see DEFAULT_TIMEOUT, AuthorizationTest::getDriver
      */
@@ -288,7 +303,7 @@ public class Helper {
      * @see exit
      */
     public void go_home() {
-        driver.get("http://testgrade.sfedu.ru/");
+        driver.get(get_base_url()+"");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("header_wrapper")));
     }
 

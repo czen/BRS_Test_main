@@ -16,22 +16,20 @@ import java.util.List;
  * @see AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, TeacherTest, MarksOfZachetPageTest, ProsmotrDisciplinPageTest, EditDisciplinPageTest, Helper
  */
 public class AfterClickBtnsTest extends Helper {
-    /** \brief Инициализация
+    /** \brief Чтение конфиг файла. Инициализация драайвера. Установка ожиданий.
      *
-     * Инициализация драйвера браузера. Установка неявных ожиданий. Автоизация под аккаунтом dem\22222
-     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
-     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
+     * Этот метод вызывается перед выполнением всех функций этого класса, т.е. тестов.
+     *
+     *  По-умолчанию используется браузер хром. Xml файлом можно настраивать запуск в разных браузерах
+     *  (следует тогда запускать именно его, а не класс или проект)
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию =  chrome
+     * @see Helper::timeouts_set, Helper::read_propities, Helper::initialization_driver, tearDown
      */
     @Parameters("browser")
     @BeforeClass
-    public void  getDriver(@Optional("chrome") String browser) {
-        if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
-            driver = new ChromeDriver();
-        } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
-            driver = new FirefoxDriver();
-        }
+    public void getDriver(@Optional("chrome") String browser) {
+        read_propities();
+        initialization_driver(browser);
         timeouts_set();
         go_home();
         //  if_grade_visiable();

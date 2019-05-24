@@ -14,51 +14,65 @@ import org.testng.annotations.*;
  * @see Helpers, SimpleTests, ForTeacherAccaunt, ForStudentAccaunt
  */
 public class ForDekanatAccaunt extends Helpers{
-    private String url1="http://testgrade.sfedu.ru/";
-    private String url2="http://testgrade.sfedu.ru/discipline/13355/rate";
-    private String url3="http://testgrade.sfedu.ru/discipline/13355/exam";
-    private String url4="http://testgrade.sfedu.ru/discipline/13355/structure";
-    private String url5="http://testgrade.sfedu.ru/discipline/13355/settings";
-    private String url6="http://testgrade.sfedu.ru/discipline/13355/teachers";
-    private String url7="http://testgrade.sfedu.ru/discipline/13355/groups";
-    private String url8="http://testgrade.sfedu.ru/discipline/13355/students";
-    private String url9="http://testgrade.sfedu.ru/discipline/14074/structure";
-    private String url10="http://testgrade.sfedu.ru/discipline/14074/settings";
-    private String url11="http://testgrade.sfedu.ru/discipline/14074/teachers";
-    private String url12="http://testgrade.sfedu.ru/discipline/13358/rate";
-    private String url13="http://testgrade.sfedu.ru/discipline/13358/exam";
-    private String url14="http://testgrade.sfedu.ru/office";
-    private String url15="http://testgrade.sfedu.ru/office/teachers";
-    private String url16="http://testgrade.sfedu.ru/office/students";
-    private String url17="http://testgrade.sfedu.ru/office/disciplines";
-    private String url18="http://testgrade.sfedu.ru/office/reports/bill";
-    private String url19="http://testgrade.sfedu.ru/office/support";
-    private String url20="http://testgrade.sfedu.ru/discipline/14075/structure";
+    private String url1;
+    private String url2;
+    private String url3;
+    private String url4;
+    private String url5;
+    private String url6;
+    private String url7;
+    private String url8;
+    private String url9;
+    private String url10;
+    private String url11;
+    private String url12;
+    private String url13;
+    private String url14;
+    private String url15;
+    private String url16;
+    private String url17;
+    private String url18;
+    private String url19;
+    private String url20;
 
-    /**\brief Инициализация
+    /** \brief Чтение конфиг файла. Инициализация драайвера. Установка ожиданий.
      *
-     * Runs this method before the first test method in the current class is invoked.
-     * Инициализация драйвера и установка ожиданий. По-умолчанию используется браузер хром.
-     * Авторизация под аккаунтом сотрудника деканата bravit\22222.
-     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
-     * @see tearDown, Helpers::timeouts_set, Helpers::get_chrome_driver, Helpers::get_firefox_driver
+     * Этот метод вызывается перед выполнением всех функций этого класса, т.е. тестов.
+     *
+     *  По-умолчанию используется браузер хром. Xml файлом можно настраивать запуск в разных браузерах
+     *  (следует тогда запускать именно его, а не класс или проект)
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию =  chrome
+     * @see Helper::timeouts_set, Helper::read_propities, Helper::initialization_driver, tearDown
      */
     @Parameters("browser")
-    @BeforeClass// @BeforeTest
-    public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
-        if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
-            driver = new ChromeDriver();
-        } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
-            driver = new FirefoxDriver();
-        }
-
-        // hhelp = new Helpers(driver);
-        //  wait=new WebDriverWait(driver, 20);
+    @BeforeClass
+    public void getDriver(@Optional("chrome") String browser) {
+        read_propities();
+        initialization_driver(browser);
         timeouts_set();
         go_home();
         authorization("dekanat");
+
+        url1=get_base_url()+"";
+        url2=get_base_url()+"discipline/13355/rate";
+        url3=get_base_url()+"discipline/13355/exam";
+        url4=get_base_url()+"discipline/13355/structure";
+        url5=get_base_url()+"discipline/13355/settings";
+        url6=get_base_url()+"discipline/13355/teachers";
+        url7=get_base_url()+"discipline/13355/groups";
+        url8=get_base_url()+"discipline/13355/students";
+        url9=get_base_url()+"discipline/14074/structure";
+        url10=get_base_url()+"discipline/14074/settings";
+        url11=get_base_url()+"discipline/14074/teachers";
+        url12=get_base_url()+"discipline/13358/rate";
+        url13=get_base_url()+"discipline/13358/exam";
+        url14=get_base_url()+"office";
+        url15=get_base_url()+"office/teachers";
+        url16=get_base_url()+"office/students";
+        url17=get_base_url()+"office/disciplines";
+        url18=get_base_url()+"office/reports/bill";
+        url19=get_base_url()+"office/support";
+        url20=get_base_url()+"discipline/14075/structure";
     }
 
     /** \brief Завершение работы
@@ -212,7 +226,7 @@ public class ForDekanatAccaunt extends Helpers{
         driver.navigate().to(url20);
         Boolean flag=IsElementVisible(By.className("rateIndicatorDIV"));
         if(flag)
-            if(!driver.findElement(By.className("rateIndicatorDIV")).getText().equals("Количество баллов: 0"))
+            if(!driver.findElement(By.className("rateIndicatorDIV")).getText().contains("Количество баллов:"))
                 Assert.fail("Не та страница");
         Assert.assertTrue(flag,"Не загрузилась страница "+url20);
     }

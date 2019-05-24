@@ -38,7 +38,7 @@ public class AuthorizationFormTest extends Helper{
 
     /*  @Test // Marking this method as part of the test
        public void with_input_into_form() {
-          // driver.get("http://testgrade.sfedu.ru/");
+          // driver.get(get_base_url()+"");
            //driver.findElement(By.id("grade")).click();
            hhelp.go_home();
            hhelp.if_grade_visiable();

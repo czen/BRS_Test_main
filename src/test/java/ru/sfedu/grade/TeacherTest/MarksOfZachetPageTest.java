@@ -20,24 +20,20 @@ import java.util.concurrent.TimeUnit;
  *  @see  AfterClickBtnsTest, MarksForSemestrPageTest, MarksForSessiaPageTest, TeacherTest, ProsmotrDisciplinPageTest, EditDisciplinPageTest, AfterClickBtnsTest, Helper
  */
 public class MarksOfZachetPageTest extends Helper {
-    /**
-     * \brief Инициализация
-     * <p>
-     * Инициализация драйвера браузера. Установка неявных ожиданий. Автоизация под аккаунтом dem\22222
+    /** \brief Чтение конфиг файла. Инициализация драайвера. Установка ожиданий.
      *
-     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
-     *  @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
+     * Этот метод вызывается перед выполнением всех функций этого класса, т.е. тестов.
+     *
+     *  По-умолчанию используется браузер хром. Xml файлом можно настраивать запуск в разных браузерах
+     *  (следует тогда запускать именно его, а не класс или проект)
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию =  chrome
+     * @see Helper::timeouts_set, Helper::read_propities, Helper::initialization_driver, tearDown
      */
     @Parameters("browser")
     @BeforeClass
     public void getDriver(@Optional("chrome") String browser) {
-        if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
-            driver = new ChromeDriver();
-        } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
-            driver = new FirefoxDriver();
-        }
+        read_propities();
+        initialization_driver(browser);
         timeouts_set();
         go_home();
         //  if_grade_visiable();
@@ -74,7 +70,7 @@ public class MarksOfZachetPageTest extends Helper {
      */
     @Test
     public void add_delete_dobor_mark() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/exam");
+        driver.navigate().to(get_base_url()+"discipline/3666/exam");
         TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -120,7 +116,7 @@ public class MarksOfZachetPageTest extends Helper {
      */
     @Test
     public void add_dobor_mark_check_second_dobor_60() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/exam");
+        driver.navigate().to(get_base_url()+"discipline/3666/exam");
         TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -161,7 +157,7 @@ public class MarksOfZachetPageTest extends Helper {
      */
     @Test
     public void add_dobor_mark_61_wrong() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/exam");
+        driver.navigate().to(get_base_url()+"discipline/3666/exam");
         TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -200,7 +196,7 @@ public class MarksOfZachetPageTest extends Helper {
      */
     @Test
     public void add_dobor_mark_add_dobor2() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/exam");
+        driver.navigate().to(get_base_url()+"discipline/3666/exam");
         TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -245,7 +241,7 @@ public class MarksOfZachetPageTest extends Helper {
      */
     @Test
     public void add_dobor2_mark_without_dobor1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/exam");
+        driver.navigate().to(get_base_url()+"discipline/3666/exam");
         TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -284,7 +280,7 @@ public class MarksOfZachetPageTest extends Helper {
      */
     @Test
     public void add_dobor_mark_add_dobor2_delete_dobor1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/exam");
+        driver.navigate().to(get_base_url()+"discipline/3666/exam");
         TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -338,7 +334,7 @@ public class MarksOfZachetPageTest extends Helper {
      */
     @Test
     public void add_dobor_mark_add_dobor2_delete_dobor2() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/exam");
+        driver.navigate().to(get_base_url()+"discipline/3666/exam");
         TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -393,7 +389,7 @@ public class MarksOfZachetPageTest extends Helper {
      */
     @Test
     public void set_avtomat_and_check_dobor() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/rate");
+        driver.navigate().to(get_base_url()+"discipline/3666/rate");
         if(!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(),"Практикум на ЭВМ (яз. прогр.) (87)",
@@ -419,7 +415,7 @@ public class MarksOfZachetPageTest extends Helper {
         }
 
 
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/exam");
+        driver.navigate().to(get_base_url()+"discipline/3666/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "Практикум на ЭВМ (яз. прогр.) (87) – Зачет",
@@ -459,7 +455,7 @@ public class MarksOfZachetPageTest extends Helper {
                 "Выставилась другая оценка в Итог " + Semestr_mark(row, 5));
 
         //удаление оценок
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3666/rate");
+        driver.navigate().to(get_base_url()+"discipline/3666/rate");
         if(!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(),"Практикум на ЭВМ (яз. прогр.) (87)",

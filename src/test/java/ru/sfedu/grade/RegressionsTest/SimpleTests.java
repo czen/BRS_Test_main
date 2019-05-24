@@ -14,30 +14,31 @@ import org.testng.annotations.*;
  */
 public class SimpleTests extends  Helpers{
 
-    private String url1="http://testgrade.sfedu.ru/";
-    private String url2="http://testgrade.sfedu.ru/remind";
-    private String url3="http://testgrade.sfedu.ru/sign/in";
-    private String url4="http://testgrade.sfedu.ru/sign/up";
+    private String url1;
+    private String url2;
+    private String url3;
+    private String url4;
 
-    /** \brief Инициализация
+    /** \brief Чтение конфиг файла. Инициализация драайвера. Установка ожиданий.
      *
-     * Этот метод вызывается перед выполнением всех функций этого класса
+     * Этот метод вызывается перед выполнением всех функций этого класса, т.е. тестов.
      *
-     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий.
-     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию - chrom
-     * @see Helpers::timeouts_set, Helpers::get_chrome_driver, Helpers::get_firefox_driver, tearDown
+     *  По-умолчанию используется браузер хром. Xml файлом можно настраивать запуск в разных браузерах
+     *  (следует тогда запускать именно его, а не класс или проект)
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию =  chrome
+     * @see Helpers::timeouts_set, Helper::read_propities, Helper::initialization_driver, tearDown
      */
     @Parameters("browser")
-    @BeforeClass// @BeforeTest
-    public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
-        if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
-            driver = new ChromeDriver();
-        } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
-            driver = new FirefoxDriver();
-        }
+    @BeforeClass
+    public void getDriver(@Optional("chrome") String browser) {
+        read_propities();
+        initialization_driver(browser);
         timeouts_set();
+
+          url1=get_base_url()+"";
+          url2=get_base_url()+"remind";
+          url3=get_base_url()+"sign/in";
+          url4=get_base_url()+"sign/up";
     }
 
     /** \brief Завершение работы

@@ -716,6 +716,10 @@
 package ru.sfedu.grade.TeacherTest;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -724,6 +728,8 @@ import org.testng.Assert;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -778,81 +784,128 @@ public class Helper {
 		return  System.getenv("Driver_Path");
 	}
 
-	/** \brief Чтение пути к драйверу браузера Хром из конфигурационного файла
-	 *
-	 * Читает путь к файлу драйвера Хрома из файла настроек, путь к файлу настроек либо указывается через системную переменную
-	 * Driever_Path, либо считается стандартным - корнем каталога
-	 * @return путь к драйверу браузера хром
-	 * @see get_firefox_driver, get_config_file_path_from_env, use_path_from_env
-	 * @throws IOException Не удалось прочитать файл
-	 */
-	public  String get_chrome_driver()  {
-		FileInputStream fis=null;
-		Properties props = new Properties();
-		try
-		{
-			if(use_path_from_env)
-				fis=new FileInputStream(new File(get_config_file_path_from_env()));
-			else
-				fis = new FileInputStream(new File(config_path));
-			props.load(fis);
-			String DRIVER_CHROME_PATH= props.getProperty("CHROME_DRIVER_PATH");
-			return DRIVER_CHROME_PATH;
-		}
-		catch (IOException e) {
-			System.err.println("ОШИБКА: Файл свойств отсуствует!");
-			e.printStackTrace();
-			Assert.fail("Не прочелся конфиг файл");
-			return "";
-		}
-		finally {
-			if (fis != null) {
-				try {
-					fis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+    /// Запускать локально или удалено
+    private Boolean run_local = true;
+    ///Путь к драйверу браузера Chrome (локальный)
+    private String CHROME_DRIVER_PATH = "";
+    /// Путь к драйверу браузера FireFox (локальный)
+    private String FIREFOX_DRIVER_PATH  = "";
+    ///Браузер, запускаемый удалено. Название должно указывать тот браузер, сервер которого запущен на хабе(сервере), указанном ниже
+    ///@see SERVER
+    private String BROWSER = "";
+    /// Адресс хаба(сервера), к которому обращается для запуска не нем тестов и браузера
+    /// @see BROWSER
+    private String SERVER = "";
+    /// Адресс запуска тестов
+    private String BASE_URL = "";
 
-	/** \brief Чтение пути к драйверу браузера ФФ из конфигурационного файла
-	 *
-	 * Читает путь к файлу драйвера ФФ из файла настроек, путь к файлу настроек либо указывается через системную переменную
-	 * Driever_Path, либо считается стандартным - корнем каталога
-	 * @return путь к драйверу браузера хром
-	 * @see get_firefox_driver, get_config_file_path_from_env, use_path_from_env
-	 * @throws IOException Не удалось прочитать файл
-	 */
-	public  String get_firefox_driver(){
-		FileInputStream fis=null;
-		Properties props = new Properties();
-		try
-		{
-			if(use_path_from_env)
-				fis=new FileInputStream(new File(get_config_file_path_from_env()));
-			else
-				fis = new FileInputStream(new File(config_path));
-			props.load(fis);
-			String DRIVER_FF_PATH= props.getProperty("FIREFOX_DRIVER_PATH");
-			return DRIVER_FF_PATH;
-		}
-		catch (IOException e) {
-			System.err.println("ОШИБКА: Файл свойств отсуствует!");
-			e.printStackTrace();
-			Assert.fail("Не прочелся конфиг файл");
-			return "";
-		}
-		finally {
-			if (fis != null) {
-				try {
-					fis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+    /**
+     *\brief Чтение конфиг файла
+     *
+     * Читает файл настроек и записывает в переменные свойства.
+     * Для добавления локальных браузеров - добавить свойства в  файл и их чтение
+     * @throws IOException Не удалось прочитать файл
+     */
+    public void read_propities(){
+        FileInputStream fis=null;
+        Properties props = new Properties();
+        try
+        {
+            if(use_path_from_env)
+                fis=new FileInputStream(new File(get_config_file_path_from_env()));
+            else
+                fis = new FileInputStream(new File(config_path));
+            props.load(fis);
+            //if add local browsers then add read propeteis
+            run_local = Boolean.valueOf(props.getProperty("LOCALHOST"));
+            CHROME_DRIVER_PATH = props.getProperty("CHROME_DRIVER_PATH");
+            FIREFOX_DRIVER_PATH = props.getProperty("FIREFOX_DRIVER_PATH");
+            BROWSER = props.getProperty("BROWSER");
+            SERVER = props.getProperty("SERVER");
+            BASE_URL = props.getProperty("BASE_URL");
+        }
+        catch (IOException e) {
+            System.err.println("ОШИБКА: Файл свойств отсуствует! " + config_path);
+            e.printStackTrace();
+            Assert.fail("Не прочелся конфиг файл " + config_path);
+        }
+        finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * \brief Инициализирует драевер для работы
+     *
+     * Если запуск локальный (устанавливается из конфига) - по-умолчанию используется * браузер хром, TestNG умеет запускать кроссбраузерно,
+     * параметр прокидывается оттуда из xml файла для запуска. Запуская его, можно настроить разные варианты запуска не только браузеров
+     *
+     * При нелокальном запуске, читает имя браузера из конфига и "сервер" по которому будет обращаться. Для добаления новых вариантов браузеров
+     * добавить if и не забыть менять адрес сервера в конфиг в файле (+имя браузера)
+     * @param browser Определяет в каком браузере будут запускаться тесты локально
+     * @see read_propities
+     */
+    public void initialization_driver(String browser) {
+        if(run_local){
+            if (browser.equals("chrome")) {
+                System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
+                driver = new ChromeDriver();
+            } else if (browser.equals("firefox")) {
+                System.setProperty("webdriver.gecko.driver", FIREFOX_DRIVER_PATH);
+                driver = new FirefoxDriver();
+            }
+        }
+        else {
+            //для добавления еще браузеров добавить такие же ифы
+            if(BROWSER.equals("chrome")) {
+                DesiredCapabilities capability = DesiredCapabilities.chrome();
+                capability.setPlatform(Platform.LINUX);
+                capability.setBrowserName(BROWSER);
+                try {
+                    driver = new RemoteWebDriver(new URL(SERVER), capability);
+                }
+                catch (MalformedURLException err){
+                    System.err.println("ОШИБКА: Что-то с классом URL " + SERVER);
+                    err.printStackTrace();
+                    Assert.fail("Нет инициализации " + SERVER);
+                }
+            }
+            if(BROWSER.equals("firefox")) {
+                DesiredCapabilities capability = DesiredCapabilities.firefox();
+                capability.setPlatform(Platform.LINUX);
+                capability.setBrowserName(BROWSER);
+                try {
+                    driver = new RemoteWebDriver(new URL(SERVER), capability);
+                }
+                catch (MalformedURLException err){
+                    System.err.println("ОШИБКА: Что-то с классом URL " + SERVER);
+                    err.printStackTrace();
+                    Assert.fail("Нет инициализации " + SERVER);
+                }
+            }
+        }
+    }
+
+    /**
+     * \brief Выдает базовый веб адрес по которому тестируеься система
+     *
+     * @warning Если указан не тестовый сервер следует ввести все нужные пароли для аккаунтов
+     * @return URL адрес
+     */
+    public String get_base_url(){
+        if(BASE_URL.isEmpty())
+        {
+            System.out.println("Config url didn't read, used: http://testgrade.sfedu.ru/ BASE_URL="+BASE_URL);
+            return "http://testgrade.sfedu.ru/";
+        }
+        return BASE_URL;
+    }
 
 	/**
 	 * \brief Устанавливает значения ожиданий для драйвера
@@ -870,7 +923,7 @@ public class Helper {
 	 * @see exit
 	 */
 	public void go_home() {
-		driver.get("http://testgrade.sfedu.ru/");
+		driver.get(get_base_url()+"");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("header_wrapper")));
 	}
 
@@ -928,7 +981,7 @@ public class Helper {
 	 * @return Владелец аккаунта
 	 */
 	public String authorization() {
-		//driver.get("http://testgrade.sfedu.ru/");
+		//driver.get(get_base_url()+"");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
 
 		// driver.findElement(By.id("grade")).click();
@@ -1021,7 +1074,7 @@ public class Helper {
 	 * @see authorization
 	 */
 	public void exit(){
-		driver.get("http://testgrade.sfedu.ru/sign/out");
+		driver.get(get_base_url()+"sign/out");
 
 		if(! IsElementVisible(By.id("tab-news"))){
 			driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[3]/a[2]")).click();   // fa fa-sign-out fa-bg fa-fw //*[@id="wrap"]/div[2]/div[3]/a[2]/i

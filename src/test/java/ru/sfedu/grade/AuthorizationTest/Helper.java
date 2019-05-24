@@ -141,10 +141,10 @@ public class Helper {
     /// Путь к драйверу браузера FireFox (локальный)
     private String FIREFOX_DRIVER_PATH  = "";
     ///Браузер, запускаемый удалено. Название должно указывать тот браузер, сервер которого запущен на хабе(сервере), указанном ниже
-	///@see SERVER
+    ///@see SERVER
     private String BROWSER = "";
     /// Адресс хаба(сервера), к которому обращается для запуска не нем тестов и браузера
-	/// @see BROWSER
+    /// @see BROWSER
     private String SERVER = "";
     /// Адресс запуска тестов
     private String BASE_URL = "";
@@ -199,7 +199,7 @@ public class Helper {
      * При нелокальном запуске, читает имя браузера из конфига и "сервер" по которому будет обращаться. Для добаления новых вариантов браузеров
      * добавить if и не забыть менять адрес сервера в конфиг в файле (+имя браузера)
      * @param browser Определяет в каком браузере будут запускаться тесты локально
-	 * @see read_propities
+     * @see read_propities
      */
     public void initialization_driver(String browser) {
         if(run_local){
@@ -242,18 +242,24 @@ public class Helper {
         }
     }
 
-	public String get_base_url(){
-		if(BASE_URL=="") //change
-		{
-			 System.out.println("Congif url didn't read, used: "+"http://testgrade.sfedu.ru/");
-			return "http://testgrade.sfedu.ru/";
-		}
-		return BASE_URL;
-	}
+    /**
+     * \brief Выдает базовый веб адрес по которому тестируеься система
+     *
+     * @warning Если указан не тестовый сервер следует ввести все нужные пароли для аккаунтов
+     * @return URL адрес
+     */
+    public String get_base_url(){
+        if(BASE_URL.isEmpty())
+        {
+            System.out.println("Config url didn't read, used: http://testgrade.sfedu.ru/ BASE_URL="+BASE_URL);
+            return "http://testgrade.sfedu.ru/";
+        }
+        return BASE_URL;
+    }
 
     /**
      * \brief Устанавливает значения ожиданий для драйвера
-     * @see DEFAULT_TIMEOUT
+     * @see DEFAULT_TIMEOUT, AuthorizationTest::getDriver
      */
     public void timeouts_set(){
         driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -279,7 +285,7 @@ public class Helper {
      * @return Владелец аккаунта
      */
     public String authorization() {
-        //driver.get("http://testgrade.sfedu.ru/");
+        //driver.get(get_base_url()+"");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
 
         // driver.findElement(By.id("grade")).click();
@@ -361,7 +367,7 @@ public class Helper {
      * @see exit
      */
     public void go_home() {
-        driver.get("http://testgrade.sfedu.ru/");
+        driver.get(get_base_url()+"");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("header_wrapper")));
     }
 
@@ -372,7 +378,7 @@ public class Helper {
      * @see authorization
      */
     public void exit(){
-        driver.get("http://testgrade.sfedu.ru/sign/out");
+        driver.get(get_base_url()+"sign/out");
         if(! IsElementVisible(By.id("tab-news"))){
             //поиск элемента = кнопка выхода из аккаунта
             driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[3]/a[2]")).click();   // fa fa-sign-out fa-bg fa-fw

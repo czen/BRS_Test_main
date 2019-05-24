@@ -22,24 +22,20 @@ import java.util.concurrent.TimeUnit;
  *  @see  AfterClickBtnsTest, MarksForSemestrPageTest, TeacherTest, MarksOfZachetPageTest, ProsmotrDisciplinPageTest, EditDisciplinPageTest, AfterClickBtnsTest, Helper
  */
 public class MarksForSessiaPageTest extends Helper {
-    /**
-     * \brief Инициализация
-     * <p>
-     * Инициализация драйвера браузера. Установка неявных ожиданий. Автоизация под аккаунтом dem\22222
+    /** \brief Чтение конфиг файла. Инициализация драайвера. Установка ожиданий.
      *
-     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию = chrom
-     * @see Helper::timeouts_set, Helper::get_chrome_driver, Helper::get_firefox_driver, tearDown
+     * Этот метод вызывается перед выполнением всех функций этого класса, т.е. тестов.
+     *
+     *  По-умолчанию используется браузер хром. Xml файлом можно настраивать запуск в разных браузерах
+     *  (следует тогда запускать именно его, а не класс или проект)
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию =  chrome
+     * @see Helper::timeouts_set, Helper::read_propities, Helper::initialization_driver, tearDown
      */
     @Parameters("browser")
     @BeforeClass
     public void getDriver(@Optional("chrome") String browser) {
-        if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
-            driver = new ChromeDriver();
-        } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
-            driver = new FirefoxDriver();
-        }
+        read_propities();
+        initialization_driver(browser);
         timeouts_set();
         go_home();
         //  if_grade_visiable();
@@ -79,7 +75,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void check_empty_string() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -117,7 +113,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void dobor_input_0() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -157,7 +153,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void dobor_input_39_wrong() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -196,7 +192,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void dobor_input_38() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -237,7 +233,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void change_mark() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -283,7 +279,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void delete_mark() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -327,7 +323,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void click_avtomat_without_marks() {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -363,7 +359,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void click_neaka_without_marks1() {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -400,7 +396,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void click_neaka_without_marks2() {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -436,7 +432,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void click_neaka_without_marks3() {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -473,7 +469,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void input_peresdacha1_wrong() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -508,7 +504,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void input_peresdacha2_wrong() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -544,7 +540,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void dobor_input_37_input_osn() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -595,7 +591,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void input_osn_sdacha_a_lot() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -639,7 +635,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void input_osn_sdacha_22() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -690,7 +686,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void input_osn_sdacha_22_peresdacha1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -741,7 +737,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void input_osn_sdacha_22_peresdacha2() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -792,7 +788,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void input_osn_sdacha_22_neavka_osn() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -865,7 +861,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void input_neavka_osn_sdacha_22_() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -932,7 +928,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void delete_dobor_after_cdacha() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -993,7 +989,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void delete_osn_cdacha() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1047,7 +1043,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void change_mark_in_osn_sdacha() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         //TimeUnit.MILLISECONDS.sleep(50);
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
@@ -1145,7 +1141,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void add_peresdacha1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1202,7 +1198,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void delete_mark_from_peresdacha1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1265,7 +1261,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void click_neavka3_after_peresdacha1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1340,7 +1336,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void click_neavka2_after_peresdacha1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1412,7 +1408,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void peresdacha1_22_set_neavka3() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1482,7 +1478,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void peresdacha1_22_input_peresdacha2() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1545,7 +1541,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void update_peresdacha1_22() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1608,7 +1604,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void delete_osn_neavka_after_peresdacha1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1678,7 +1674,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void delete_dobor_after_peresdacha1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1746,7 +1742,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void add_peresdacha2() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1805,7 +1801,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void update_peresdacha2() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1868,7 +1864,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void delete_peresdacha2() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -1932,7 +1928,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void peresdacha2_10_set_neavka() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -2004,7 +2000,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void peresdacha2_delete_neavka2() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -2075,7 +2071,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void peresdacha2_delete_neavka1() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -2146,7 +2142,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void peresdacha2_delete_dobor() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -2213,7 +2209,7 @@ public class MarksForSessiaPageTest extends Helper {
      */
     @Test
     public void set_avtomat_and_check_dobor() throws InterruptedException {
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/rate");
+        driver.navigate().to(get_base_url()+"discipline/3723/rate");
         if(!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(),"CS332. Компьютерная графика",
@@ -2239,7 +2235,7 @@ public class MarksForSessiaPageTest extends Helper {
         }
 
 
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/exam");
+        driver.navigate().to(get_base_url()+"discipline/3723/exam");
         if (!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(), "CS332. Компьютерная графика – Экзамен",
@@ -2303,7 +2299,7 @@ public class MarksForSessiaPageTest extends Helper {
                 "Выставилась другая оценка в Итог" + Semestr_mark(row, 12));
 
         //удаление оценок
-        driver.navigate().to("http://testgrade.sfedu.ru/discipline/3723/rate");
+        driver.navigate().to(get_base_url()+"discipline/3723/rate");
         if(!IsElementVisible(By.className("subject")))
             Assert.fail("Страница не загрузилась / не видно элемента названия предмета");
         Assert.assertEquals(driver.findElement(By.className("subject")).getText(),"CS332. Компьютерная графика",

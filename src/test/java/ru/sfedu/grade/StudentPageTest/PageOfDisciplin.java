@@ -84,7 +84,7 @@ public class PageOfDisciplin  extends Helper{
      */
     @Test
     public void go_to_journal(){
-        driver.navigate().to("http://testgrade.sfedu.ru/student/discipline/13337");
+        driver.navigate().to(get_base_url()+"student/discipline/13337");
         //List<WedElement> strs=driver.findElements(By.className("disciplineRow"));
 //	Assert.assertTrue(strs.isNull(),"В таблице нет дисуиплин");
 
@@ -119,7 +119,7 @@ public class PageOfDisciplin  extends Helper{
      */
     @Test
     public void go_to_baals_after_journal(){
-        driver.navigate().to("http://testgrade.sfedu.ru/student/discipline/13337/journal");
+        driver.navigate().to(get_base_url()+"student/discipline/13337/journal");
         Assert.assertEquals(driver.findElement(By.className("blockTitle")).getText(),
                 "Журнал посещений","Загрузился не журнал посещений");
         if(!IsElementVisible(By.xpath("/html/body/div[1]/div[4]/div[1]/div[2]/div[4]/div/div[1]")))

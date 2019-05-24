@@ -13,40 +13,36 @@ import org.testng.annotations.*;
  * @see Helpers, SimpleTests, ForTeacherAccaunt, ForDekanatAccaunt
  */
 public class ForStudentAccaunt extends Helpers{
-    /*private WebDriver driver;
-    private WebDriverWait wait;
-    private Helpers hhelp;*/
 
-    private String url1="http://testgrade.sfedu.ru/";
-    private String url2="http://testgrade.sfedu.ru/student/discipline/13337";
-    private String url3="http://testgrade.sfedu.ru/student/discipline/13337/journal";
-    private String url4="http://testgrade.sfedu.ru/student/discipline/3760";
-    private String url5="http://testgrade.sfedu.ru/student/discipline/3760/journal";
+    private String url1;
+    private String url2;
+    private String url3;
+    private String url4;
+    private String url5;
 
-    /** \brief Инициализация
+    /** \brief Чтение конфиг файла. Инициализация драайвера. Установка ожиданий.
      *
-     * Этот метод вызывается перед выполнением всех функций этого класса
+     * Этот метод вызывается перед выполнением всех функций этого класса, т.е. тестов.
      *
-     * Инициализация драйвера браузера. По-умолчанию - хром. Установка ожиданий. Авторизация под ELLA/22222
-     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию - chrom
-     * @see Helpers::timeouts_set, Helpers::get_chrome_driver, Helpers::get_firefox_driver, tearDown
+     *  По-умолчанию используется браузер хром. Xml файлом можно настраивать запуск в разных браузерах
+     *  (следует тогда запускать именно его, а не класс или проект)
+     * @param browser Передается из xml-файла для выбора браузера, в котором запустятся тесты. По-умолчанию =  chrome
+     * @see Helpers::timeouts_set, Helper::read_propities, Helper::initialization_driver, tearDown
      */
     @Parameters("browser")
-    @BeforeClass// @BeforeTest
-    public void  /* WebDriver*/ getDriver(@Optional("chrome") String browser) {
-        if (browser.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", get_chrome_driver());
-            driver = new ChromeDriver();
-        } else if (browser.equals("firefox")) {
-            System.setProperty("webdriver.gecko.driver", get_firefox_driver());
-            driver = new FirefoxDriver();
-        }
-
-      /*  hhelp = new Helpers(driver);
-        wait=new WebDriverWait(driver, 20);*/
+    @BeforeClass
+    public void getDriver(@Optional("chrome") String browser) {
+        read_propities();
+        initialization_driver(browser);
         timeouts_set();
         go_home();
         authorization("student");
+
+        url1=get_base_url()+"";
+        url2=get_base_url()+"student/discipline/13337";
+        url3=get_base_url()+"student/discipline/13337/journal";
+        url4=get_base_url()+"student/discipline/3760";
+        url5=get_base_url()+"student/discipline/3760/journal";
     }
 
     /** \brief Завершение работы

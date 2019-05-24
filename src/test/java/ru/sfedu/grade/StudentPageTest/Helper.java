@@ -200,6 +200,21 @@ public class Helper {
     }
 
     /**
+     * \brief Выдает базовый веб адрес по которому тестируеься система
+     *
+     * @warning Если указан не тестовый сервер следует ввести все нужные пароли для аккаунтов
+     * @return URL адрес
+     */
+    public String get_base_url(){
+        if(BASE_URL.isEmpty())
+        {
+            System.out.println("Config url didn't read, used: http://testgrade.sfedu.ru/ BASE_URL="+BASE_URL);
+            return "http://testgrade.sfedu.ru/";
+        }
+        return BASE_URL;
+    }
+
+    /**
      * \brief Устанавливает значения ожиданий для драйвера
      * @see DEFAULT_TIMEOUT, PageOfDisciplin::getDriver
      */
@@ -215,7 +230,7 @@ public class Helper {
      * @see exit
      */
     public void go_home() {
-        driver.get("http://testgrade.sfedu.ru/");
+        driver.get(get_base_url()+"");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("header_wrapper")));
     }
 
@@ -273,7 +288,7 @@ public class Helper {
      * @return Владелец аккаунта
      */
     public String authorization() {
-        //driver.get("http://testgrade.sfedu.ru/");
+        //driver.get(get_base_url()+"");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("tab-news")));
 
         if(IsElementExists(By.id("grade")))
@@ -366,7 +381,7 @@ public class Helper {
      * @see authorization
      */
     public void exit(){
-        driver.get("http://testgrade.sfedu.ru/sign/out");
+        driver.get(get_base_url()+"sign/out");
 
         if(! IsElementVisible(By.id("tab-news"))){
             driver.findElement(By.xpath("//*[@id=\"wrap\"]/div[2]/div[3]/a[2]")).click();   // fa fa-sign-out fa-bg fa-fw //*[@id="wrap"]/div[2]/div[3]/a[2]/i
