@@ -4,10 +4,10 @@ Selenium + Java + TestNG + Doxygen + Maven
 Структура проекта:
 --------------------------
 
-	| Пакет			| Класс			| Описание
-|-----------------------|-----------------------|--------------------------------------|
-| RegressionsTest	| SimpleTest		| Переход по заранее заданным ссылкам
-|			| StudentAccTest	| и проверка существования этих страниц
+	 Пакет			| Класс			| Описание
+-----------------------|-----------------------|--------------------------------------|
+ RegressionsTest	| SimpleTest		| Переход по заранее заданным ссылкам
+			| StudentAccTest	| и проверка существования этих страниц
 	|			| TeacherAccTest	|
 	|			| DekanatAccTest	|
 	| AuthorizationTest	| AuthorizationFormTest	| Тесты авторизации
@@ -15,13 +15,13 @@ Selenium + Java + TestNG + Doxygen + Maven
 	| UnauthorizedPageTest	| TabsTest		| Тесты элементов на странице для
 |			| FooterLinks		| неавторизированного пользователя
 	| StudentPageTest	| 	PageOfDisciplin		| Кнопки на странице дисциплины у студента |
- | TeacherTest | TeacherTest | Тесты для преподовательского аккаунта на кнопки и оценки |
- | | AfterClickBtnsTest |
- | | EditDisciplinPageTest |
- | | MarksForSemestrPageTest |
- | | MarksForSessiaPageTest |
- | | MarksOfZachetPageTest |
- | | ProsmotrDisciplinPageTest |
+  TeacherTest | TeacherTest | Тесты для преподовательского аккаунта на кнопки и оценки |
+  | AfterClickBtnsTest |
+  | EditDisciplinPageTest |
+ | MarksForSemestrPageTest |
+  | MarksForSessiaPageTest |
+  | MarksOfZachetPageTest |
+  | ProsmotrDisciplinPageTest |
 
 
 
