@@ -1,0 +1,8 @@
+version: '3'
+services:
+  tester:
+    image: "maven:latest"
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/home/user/BRS_Test_main
