@@ -30,7 +30,9 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -171,9 +173,9 @@ public class Helper {
         else {
             //для добавления еще браузеров добавить такие же ифы
             if(BROWSER.equals("chrome")) {
-                DesiredCapabilities capability = DesiredCapabilities.chrome();
-                capability.setPlatform(Platform.LINUX);
-                capability.setBrowserName(BROWSER);
+                ChromeOptions capability =new ChromeOptions();// DesiredCapabilities.chrome();
+                capability.setCapability(CapabilityType.BROWSER_NAME,"chrome");
+                capability.setCapability(CapabilityType.PLATFORM_NAME,"LINUX");
                 try {
                     driver = new RemoteWebDriver(new URL(SERVER), capability);
                 }

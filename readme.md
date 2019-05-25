@@ -100,10 +100,15 @@ Selenium + Java + TestNG + Doxygen + Maven
 * `mvn clean compile`
 * `mvn clean install`
 * `mvn clean package`
-Вторая после сборки будет сразу запускать тесты.
+
+Первая команда просто компилирует и создает class файлы.
+Вторая команда после сборки будет сразу запускать тесты.
 Третья еще упакает программу в jar-файл и положит все в локальный репозиторий.
 
-Если сборка падает с ошибкой: ______
+Если сборка падает с ошибкой:
+
+ ```java: cannot access java.util.function.Function
+ class file for java.util.function.Function not found```
 
 Нужно раскоментировать строки из pom-файла: 
 ```xml
@@ -125,8 +130,8 @@ Xml-файлы имеют четкую структуру и хранят инф
 
 Чтобы запустить сразу все тестирование: `mvn test`
 Чтобы запустить тесты в определенном классе: `mvn test -Dtest=ru.sfedu.grade.ClassName`
-Чтобы запустить один тестовый метод из класса: `mvn test -Dtest=ru.sfedu.grade.ClassName#method_name test`
-//А нужен ли последний тест слово?
+Чтобы запустить один тестовый метод из класса: `mvn test -Dtest=ru.sfedu.grade.ClassName#method_name`
+
 
 https://qa-help.ru/questions/kak-zapustit-testng-iz-komandnoj-stroki
 http://qaru.site/questions/16768748/maven-testng-include-and-exclude-tests
@@ -136,6 +141,12 @@ http://qaru.site/questions/16768748/maven-testng-include-and-exclude-tests
 * Скомпилировать, но не запускать тесты `mvn install -DskipTests`
 * Запустить несколько тестовых классов\методов: `mvn test -Dtest = CLASS_NAME1#METHOD_NAME1, CLASS_NAME2 #METHOD_NAME2` Возможно понадобятся кавычки
 * Команда `clean` очищает папку перед компиляцией
+
+<h3> Результат </h3>
+
+Результат прохождения тестов при запуске из среды разработке показывается там же.
+
+При заупске из командной строки логи запуска печатаются в консоли и результат выполнения тестов testng записывает в файл. Этот файл можно найти в папке проекта по пути _____
 
 <h3> Документация </h3>
 
