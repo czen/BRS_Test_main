@@ -151,7 +151,7 @@ public class AfterClickBtnsTest extends Helper {
         String type_d=get_type_subject(group_tables.get(1));
         btn_sem.click();
         if(!IsElementVisible(By.className("subject"))) {
-            Assert.fail("Не загрузилась страница после нажатия на кнопку Семестр");
+            Assert.fail("Не загрузилась страница после нажатия на кнопку Сессия");
         }
         List<WebElement> btns_tab = driver.findElements(By.className("button"));
         btns_tab.get(0).click();
@@ -177,7 +177,7 @@ public class AfterClickBtnsTest extends Helper {
         // String type_d=get_type_subject(group_tables.get(1));
         btn_sem.click();
         if(!IsElementVisible(By.className("subject"))) {
-            Assert.fail("Не загрузилась страница после нажатия на кнопку Семестр");
+            Assert.fail("Не загрузилась страница после нажатия на кнопку Сессия");
         }
         List<WebElement> btns_tab = driver.findElements(By.className("button"));
         btns_tab.get(1).click();
@@ -202,7 +202,7 @@ public class AfterClickBtnsTest extends Helper {
         WebElement btn_sem = get_btn_sessia(group_tables.get(1));
         btn_sem.click();
         if(!IsElementVisible(By.className("subject"))) {
-            Assert.fail("Не загрузилась страница после нажатия на кнопку Семестр");
+            Assert.fail("Не загрузилась страница после нажатия на кнопку Сессия");
         }
         List<WebElement> btns_tab = driver.findElements(By.className("button"));
         String tab1_sem=btns_tab.get(0).getText();
@@ -238,7 +238,7 @@ public class AfterClickBtnsTest extends Helper {
         WebElement btn_sem = get_btn_journal(group_tables.get(1));
         btn_sem.click();
         if(!IsElementVisible(By.className("subject"))) {
-            Assert.fail("Не загрузилась страница после нажатия на кнопку Семестр");
+            Assert.fail("Не загрузилась страница после нажатия на кнопку Журнал");
         }
         List<WebElement> btns_tab = driver.findElements(By.className("button"));
         String tab1_sem=btns_tab.get(0).getText();
