@@ -25,7 +25,7 @@ public class App
 
       //  WebDriver driver;
 
-        DesiredCapabilities capability = new DesiredCapabilities();
+  /*      DesiredCapabilities capability = new DesiredCapabilities();
 
       capability.setBrowserName("chrome");
 
@@ -39,7 +39,7 @@ public class App
 
         RemoteWebDriver   driver = new RemoteWebDriver(new URL("http://grade-dev.mmcs.sfedu.ru:5901/wd/hub"), capability);
 
-        driver.get("http://internetka.in.ua/selenium-compound-class/");
+        driver.get("http://internetka.in.ua/selenium-compound-class/");*/
     //    if(driver.getPageSource().contains("Selenium: поиск элемента по составному имени класса"))
       //      System.out.println(((RemoteWebDriver) driver).findElementByClassName("entry-title"));
     }
