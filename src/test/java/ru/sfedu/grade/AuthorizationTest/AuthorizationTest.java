@@ -41,7 +41,7 @@ public class AuthorizationTest extends Helper{
      * Тест-кейс:
      * 1. Открыть страницу авторизации
      * 2. Перейти на авторизацию по логину\паролю
-     * 3. Авторизоваться под dem\22222
+     * 3. Авторизоваться под dem\11111
      *
      * Ожидается:
      * 1. Наличие панели пользователя
@@ -69,7 +69,7 @@ public class AuthorizationTest extends Helper{
      * Тест-кейс:
      * 1. Открыть страницу авторизации
      * 2. Перейти на авторизацию по логину\паролю
-     * 3. Авторизоваться под ELLA\22222
+     * 3. Авторизоваться под ELLA\11111
      *
      * Ожидается:
      * 1. Наличие панели пользователя
@@ -97,7 +97,7 @@ public class AuthorizationTest extends Helper{
      * Тест-кейс:
      * 1. Открыть страницу авторизации
      * 2. Перейти на траницу авторизации по логину\паролю
-     * 3. Авторизоваться под bravit\22222
+     * 3. Авторизоваться под bravit\11111
      *
      * Ожидается:
      * 1. Наличие панели пользователя
@@ -129,7 +129,7 @@ public class AuthorizationTest extends Helper{
      * Тест-кейс:
      * 1. Открыть страницу авторизации
      * 2. Перейти на траницу авторизации по логину\паролю
-     * 3. Авторизоваться под rs\22222
+     * 3. Авторизоваться под rs\11111
      *
      * Ожидается:
      * 1. Наличие панели пользователя
@@ -158,7 +158,7 @@ public class AuthorizationTest extends Helper{
     public void change_semest_test(){
         go_home();
         if_grade_visiable();
-        Boolean flag=authorization("rs","22222");
+        Boolean flag=authorization("rs","11111");
         Assert.assertTrue(flag,"Не вошли в аккаунт");
 
         for (int i=1;i<=last_semestr();i++)

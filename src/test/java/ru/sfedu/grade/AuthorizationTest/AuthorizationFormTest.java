@@ -44,7 +44,7 @@ public class AuthorizationFormTest extends Helper{
            hhelp.if_grade_visiable();
            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
            driver.findElement(By.id("login")).sendKeys("ELLA");
-           driver.findElement(By.id("password")).sendKeys("22222");
+           driver.findElement(By.id("password")).sendKeys("11111");
            driver.findElement(By.id("signin_b")).click();
            wait.until(ExpectedConditions.textToBe(By.className("main_top"),"Дисциплины"));
            String user_name = driver.findElement(By.id("username")).getText();
@@ -69,7 +69,7 @@ public class AuthorizationFormTest extends Helper{
         go_home();
         if_grade_visiable();
         //driver.findElement(By.id("login")).sendKeys("ELLA");
-        //driver.findElement(By.id("password")).sendKeys("22222");
+        //driver.findElement(By.id("password")).sendKeys("11111");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
@@ -105,7 +105,7 @@ public class AuthorizationFormTest extends Helper{
         if_grade_visiable();
 
         driver.findElement(By.id("login")).sendKeys("ELLA");
-        //driver.findElement(By.id("password")).sendKeys("22222");
+        //driver.findElement(By.id("password")).sendKeys("11111");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
@@ -139,7 +139,7 @@ public class AuthorizationFormTest extends Helper{
         if_grade_visiable();// driver.findElement(By.id("grade")).click();
 
         //driver.findElement(By.id("login")).sendKeys("ELLA");
-        driver.findElement(By.id("password")).sendKeys("22222");
+        driver.findElement(By.id("password")).sendKeys("11111");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;
@@ -275,7 +275,7 @@ public class AuthorizationFormTest extends Helper{
         if_grade_visiable();
 
         driver.findElement(By.id("login")).sendKeys("EL");
-        driver.findElement(By.id("password")).sendKeys("22222");
+        driver.findElement(By.id("password")).sendKeys("11111");
         driver.findElement(By.id("signin_b")).click();
 
         String error_text;

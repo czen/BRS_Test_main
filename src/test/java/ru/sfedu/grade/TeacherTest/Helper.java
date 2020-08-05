@@ -772,7 +772,7 @@ public class Helper {
 	/// Логин для аккаунта Романа Борисовича @see authorization
 	private String rs_login="rs";
 	/// Общий пароль для всех аккаунтов @see authorization
-	private String pwd="22222";
+	private String pwd="11111";
 
 	/** @brief Читает путь к конфигурационному файлу проекта из системной переменной Driver_Path
 	 *
